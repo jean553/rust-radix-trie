@@ -48,7 +48,7 @@ mod rt {
                 return false;
             }
 
-            let current = &self.children;
+            let mut current: &Option<Box<RadixTrieNodeChild>> = &self.children;
 
             loop {
 
