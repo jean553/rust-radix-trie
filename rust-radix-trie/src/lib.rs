@@ -32,10 +32,37 @@ mod rt {
                 })
             }));
         }
+
+        pub fn key_exists(&self, key: &str) -> bool {
+
+            if self.children.is_none() {
+                return false;
+            }
+
+            let current = &self.children;
+
+            loop {
+
+                match current {
+                    &Some(ref child) => {
+
+                        if &child.node.key == key {
+                            return true;
+                        }
+                    }
+                    &None => {
+                        return false;
+                    }
+                }
+            }
+
+            false
+        }
     }
 }
 
 #[cfg(test)]
+
 mod tests {
 
     use rt;
