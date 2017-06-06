@@ -3,8 +3,8 @@ mod rt {
     use std::ptr;
 
     struct RadixTrieNodeChild {
-        next: *const RadixTrieNodeChild,
-        node: *const RadixTrieNode,
+        next: Option<Box<RadixTrieNodeChild>>,
+        node: Box<RadixTrieNode>,
     }
 
     pub struct RadixTrieNode {
@@ -15,10 +15,22 @@ mod rt {
     impl RadixTrieNode {
 
         pub fn new(key: &str) -> RadixTrieNode {
+
             RadixTrieNode {
                 key: key.to_string(),
                 children: None,
             }
+        }
+
+        pub fn insert(&mut self, key: &str) {
+
+            self.children = Some(Box::new(RadixTrieNodeChild {
+                next: None,
+                node: Box::new(RadixTrieNode {
+                    key: key.to_string(),
+                    children: None,
+                })
+            }));
         }
     }
 }
@@ -31,6 +43,7 @@ mod tests {
     #[test]
     fn test_create() {
 
-        let node = rt::RadixTrieNode::new("");
+        let mut node = rt::RadixTrieNode::new("");
+        node.insert("hello");
     }
 }
