@@ -58,6 +58,8 @@ mod rt {
                         if &child.node.key == key {
                             return true;
                         }
+
+                        current = &child.node.children;
                     }
                     &None => {
                         return false;
