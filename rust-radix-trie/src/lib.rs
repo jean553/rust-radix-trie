@@ -71,6 +71,19 @@ mod tests {
     fn test_create() {
 
         let mut node = rt::RadixTrieNode::new("");
-        node.insert("hello");
+
+        assert_eq!(
+            node.key_exists("first"),
+            false,
+            "The first key should exist !",
+        );
+
+        node.insert("second");
+
+        assert_eq!(
+            node.key_exists("second"),
+            true,
+            "The second key should exist !",
+        );
     }
 }
