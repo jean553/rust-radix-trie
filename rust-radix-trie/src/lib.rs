@@ -14,6 +14,7 @@ mod rt {
 
     impl RadixTrieNode {
 
+        /// Creates a new radix trie node
         pub fn new(key: &str) -> RadixTrieNode {
 
             RadixTrieNode {
@@ -22,6 +23,10 @@ mod rt {
             }
         }
 
+        /// Inserts a new key into the radix trie
+        ///
+        /// NOTE: This fonction is partialy implemented;
+        /// by now, it simply gives an unique child to the node
         pub fn insert(&mut self, key: &str) {
 
             self.children = Some(Box::new(RadixTrieNodeChild {
@@ -33,6 +38,10 @@ mod rt {
             }));
         }
 
+        /// Checks if a key exists inside the radix trie
+        ///
+        /// NOTE: This function is partialy implemented;
+        /// by now, it simply looks at the first child of the node
         pub fn key_exists(&self, key: &str) -> bool {
 
             if self.children.is_none() {
