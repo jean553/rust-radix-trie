@@ -9,7 +9,7 @@ mod rt {
 
     pub struct RadixTrieNode {
         key: String,
-        children: *const RadixTrieNodeChild,
+        children: Option<Box<RadixTrieNodeChild>>,
     }
 
     impl RadixTrieNode {
@@ -17,7 +17,7 @@ mod rt {
         pub fn new(key: &str) -> RadixTrieNode {
             RadixTrieNode {
                 key: key.to_string(),
-                children: ptr::null(),
+                children: None,
             }
         }
     }
