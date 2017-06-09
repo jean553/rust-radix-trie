@@ -25,10 +25,12 @@ mod rt {
 
         /// Inserts a new key into the radix trie
         ///
-        /// NOTE: This fonction is partialy implemented;
-        /// by now, it simply gives an unique child to the node
+        /// NOTE: partially implemented
         pub fn insert(&mut self, key: &str) {
 
+            /* insert a new node child for the current node,
+               the new child next node is the last inserted
+               child inserted before */
             let new_node = Some(Box::new(RadixTrieNodeChild {
                 next: self.children.take(),
                 node: Box::new(RadixTrieNode {
@@ -37,6 +39,7 @@ mod rt {
                 })
             }));
 
+            /* replace the previous last node child by the new one */
             self.children = new_node;
         }
 
