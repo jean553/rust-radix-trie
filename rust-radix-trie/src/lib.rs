@@ -29,13 +29,15 @@ mod rt {
         /// by now, it simply gives an unique child to the node
         pub fn insert(&mut self, key: &str) {
 
-            self.children = Some(Box::new(RadixTrieNodeChild {
-                next: None,
+            let new_node = Some(Box::new(RadixTrieNodeChild {
+                next: self.children.take(),
                 node: Box::new(RadixTrieNode {
                     key: key.to_string(),
                     children: None,
                 })
             }));
+
+            self.children = new_node;
         }
 
         /// Checks if a key exists inside the radix trie
