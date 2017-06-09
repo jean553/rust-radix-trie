@@ -25,10 +25,12 @@ mod rt {
 
         /// Inserts a new key into the radix trie
         ///
-        /// NOTE: This fonction is partialy implemented;
-        /// by now, it simply gives an unique child to the node
+        /// NOTE: partially implemented
         pub fn insert(&mut self, key: &str) {
 
+            /* insert a new node child for the current node,
+               the new child next node is the last inserted
+               child inserted before */
             let new_node = Some(Box::new(RadixTrieNodeChild {
                 next: self.children.take(),
                 node: Box::new(RadixTrieNode {
@@ -37,6 +39,7 @@ mod rt {
                 })
             }));
 
+            /* replace the previous last node child by the new one */
             self.children = new_node;
         }
 
@@ -46,25 +49,19 @@ mod rt {
         /// by now, it simply looks at the first child of the node
         pub fn key_exists(&self, key: &str) -> bool {
 
-            if self.children.is_none() {
-                return false;
-            }
-
-            let mut current: &Option<Box<RadixTrieNodeChild>> = &self.children;
+            let mut child = &self.children;
 
             loop {
-
-                match current {
-                    &Some(ref child) => {
-
-                        if &child.node.key == key {
+                match child {
+                    &Some(ref v) => {
+                        if v.node.key == key {
                             return true;
                         }
 
-                        current = &child.node.children;
-                    }
+                        child = &v.next;
+                    },
                     &None => {
-                        return false;
+                        break;
                     }
                 }
             }
@@ -88,7 +85,7 @@ mod tests {
         assert_eq!(
             node.key_exists("first"),
             false,
-            "The first key should exist !",
+            "The first key should not exist !",
         );
 
         node.insert("second");
@@ -97,6 +94,25 @@ mod tests {
             node.key_exists("second"),
             true,
             "The second key should exist !",
+        );
+
+        node.insert("third");
+
+        assert_eq!(
+            node.key_exists("third"),
+            true,
+            "The third key should exist !",
+        );
+        assert_eq!(
+            node.key_exists("second"),
+            true,
+            "The second key should exist !",
+        );
+
+        assert_eq!(
+            node.key_exists("unknown"),
+            false,
+            "The unknown key should not exist !",
         );
     }
 }
