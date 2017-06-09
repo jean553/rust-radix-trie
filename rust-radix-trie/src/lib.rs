@@ -49,25 +49,19 @@ mod rt {
         /// by now, it simply looks at the first child of the node
         pub fn key_exists(&self, key: &str) -> bool {
 
-            if self.children.is_none() {
-                return false;
-            }
-
-            let mut current: &Option<Box<RadixTrieNodeChild>> = &self.children;
+            let mut child = &self.children;
 
             loop {
-
-                match current {
-                    &Some(ref child) => {
-
-                        if &child.node.key == key {
+                match child {
+                    &Some(ref v) => {
+                        if v.node.key == key {
                             return true;
                         }
 
-                        current = &child.node.children;
-                    }
+                        child = &v.next;
+                    },
                     &None => {
-                        return false;
+                        break;
                     }
                 }
             }
@@ -91,7 +85,7 @@ mod tests {
         assert_eq!(
             node.key_exists("first"),
             false,
-            "The first key should exist !",
+            "The first key should not exist !",
         );
 
         node.insert("second");
