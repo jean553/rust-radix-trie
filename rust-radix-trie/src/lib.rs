@@ -95,5 +95,24 @@ mod tests {
             true,
             "The second key should exist !",
         );
+
+        node.insert("third");
+
+        assert_eq!(
+            node.key_exists("third"),
+            true,
+            "The third key should exist !",
+        );
+        assert_eq!(
+            node.key_exists("second"),
+            true,
+            "The second key should exist !",
+        );
+
+        assert_eq!(
+            node.key_exists("unknown"),
+            false,
+            "The unknown key should not exist !",
+        );
     }
 }
