@@ -34,7 +34,12 @@ mod rt {
         pub fn insert(&mut self, word: &str) {
 
             /* FIXME: should browse the characters from the beginning
-               and continuously compare it with the word characters */
+               and continuously compare it with the word characters;
+               should not directly leave if there are different characters */
+
+            if word[..self.characters.len()] != self.characters {
+                return;
+            }
 
             self.characters = word.to_string();
         }
@@ -58,9 +63,9 @@ mod tests {
     #[test]
     fn test_node_creation_and_insertion() {
 
-        let mut node = Node::new();
+        let mut node = Node::new("hello");
 
-        const INSERTED_CHARACTERS: &str = "word";
+        const INSERTED_CHARACTERS: &str = "helloworld";
         node.insert(INSERTED_CHARACTERS);
         assert_eq!(node.get_characters(), INSERTED_CHARACTERS);
     }
