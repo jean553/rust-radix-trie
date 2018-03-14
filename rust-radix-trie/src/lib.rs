@@ -21,6 +21,19 @@ mod rt {
                 children: Vec::new(),
             }
         }
+
+        /// Inserts a new word into the radix trie (may create new nodes).
+        ///
+        /// # Arguments:
+        ///
+        /// `word` - the new word to store
+        pub fn insert(&mut self, word: &str) {
+
+            /* FIXME: should browse the characters from the beginning
+               and continuously compare it with the word characters */
+
+            self.characters = word.to_string();
+        }
     }
 }
 
@@ -30,8 +43,9 @@ mod tests {
     use rt::Node;
 
     #[test]
-    fn test_node_creation() {
+    fn test_node_creation_and_insertion() {
 
-        let node = Node::new();
+        let mut node = Node::new();
+        node.insert("word");
     }
 }
