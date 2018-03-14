@@ -34,6 +34,15 @@ mod rt {
 
             self.characters = word.to_string();
         }
+
+        /// Getter of the characters stored into the node.
+        ///
+        /// # Returns:
+        ///
+        /// the characters into the node
+        pub fn get_characters(&self) -> &str {
+            &self.characters
+        }
     }
 }
 
