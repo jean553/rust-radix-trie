@@ -55,6 +55,9 @@ mod tests {
     fn test_node_creation_and_insertion() {
 
         let mut node = Node::new();
-        node.insert("word");
+
+        const INSERTED_CHARACTERS: &str = "word";
+        node.insert(INSERTED_CHARACTERS);
+        assert_eq!(node.get_characters(), INSERTED_CHARACTERS);
     }
 }
