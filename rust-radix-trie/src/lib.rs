@@ -12,12 +12,16 @@ mod rt {
 
         /// Creates a new radix trie node, with an empty array of characters and an empty list of children nodes.
         ///
+        /// # Arguments:
+        ///
+        /// `characters` - the characters to store into the created node
+        ///
         /// # Returns:
         ///
         /// new radix trie node
-        pub fn new() -> Node {
+        pub fn new(characters: &str) -> Node {
             Node {
-                characters: String::new(),
+                characters: characters.to_string(),
                 children: Vec::new(),
             }
         }
