@@ -37,11 +37,10 @@ mod rt {
                and continuously compare it with the word characters;
                should not directly leave if there are different characters */
 
-            if word[..self.characters.len()] != self.characters {
-                return;
+            if word[..self.characters.len()] == self.characters &&
+                self.children.is_empty() {
+                self.characters = word.to_string();
             }
-
-            self.characters = word.to_string();
         }
 
         /// Getter of the characters stored into the node.
