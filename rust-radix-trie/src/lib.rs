@@ -36,20 +36,31 @@ mod rt {
             let mut contained_word = true;
             let mut different_character_index = 0;
 
+            /* check if the word is present into
+               the first part of the node characters */
+
             for (index, character) in self.characters.chars().enumerate() {
 
                 if character != (word.as_bytes()[index] as char) {
-
                     contained_word = false;
                     different_character_index = index;
                     break;
                 }
             }
 
+            /* if the first part of the node characters is exactly
+               the same as the word, then just replace it by the node
+               (if there is no child) */
+
             if contained_word && self.children.is_empty() {
                 self.characters = word.to_string();
                 return;
             }
+
+            /* in any other case, keep only the common part and set it
+               as the current node characters; the current node second
+               part is moved into a new child; the inserted word second
+               part is also moved into a new child */
 
             let characters = self.characters.clone();
             let (first, second) = characters.split_at(
