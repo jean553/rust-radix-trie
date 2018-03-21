@@ -117,4 +117,13 @@ mod tests {
         let node = Node::new("hello");
         assert_eq!(node.get_children().is_empty(), true);
     }
+
+    #[test]
+    fn test_characters_exist_into_root_node() {
+
+        let node = Node::new("hello");
+
+        assert_eq!(node.exists("hello"), true);
+        assert_eq!(node.exists("bonjour"), false);
+    }
 }
