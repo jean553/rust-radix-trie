@@ -14,7 +14,7 @@ mod tests {
     }
 
     #[test]
-    fn test_two_children_from_empty_root() {
+    fn test_create_children_with_insertion_longer_than_characters() {
 
         const FIRST_CHARACTERS: &str = "hello";
         const SECOND_CHARACTERS: &str = "bonjour";
@@ -32,7 +32,28 @@ mod tests {
         let children = node.get_children();
         assert_eq!(children[0].get_characters(), FIRST_CHARACTERS);
         assert_eq!(children[1].get_characters(), SECOND_CHARACTERS);
+        assert_eq!(node.get_characters(), "");
+    }
 
+    #[test]
+    fn test_create_children_with_insertion_shorter_than_characters() {
+
+        const FIRST_CHARACTERS: &str = "hello";
+        const SECOND_CHARACTERS: &str = "bon";
+
+        let mut node = Node::new(FIRST_CHARACTERS);
+
+        const INSERTED_CHARACTERS: &str = SECOND_CHARACTERS;
+        node.insert(INSERTED_CHARACTERS);
+
+        const ROOT_NODE_EXPECTED_CHARACTERS: &str = "";
+        assert_eq!(node.get_characters(), ROOT_NODE_EXPECTED_CHARACTERS);
+
+        /* FIXME: order should not matter when getting the children */
+
+        let children = node.get_children();
+        assert_eq!(children[0].get_characters(), FIRST_CHARACTERS);
+        assert_eq!(children[1].get_characters(), SECOND_CHARACTERS);
         assert_eq!(node.get_characters(), "");
     }
 
