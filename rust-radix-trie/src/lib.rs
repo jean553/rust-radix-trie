@@ -53,6 +53,26 @@ mod rt {
             self.characters = "".to_string();
         }
 
+        /// Indicates if a word exists into the radix trie
+        ///
+        /// # Arguments:
+        ///
+        /// `word` - the word to search for
+        ///
+        /// # Returns:
+        ///
+        /// True if the word exists, False if the word does not exist
+        pub fn exists(&self, word: &str) -> bool {
+
+            /* FIXME: should search for the word into children */
+
+            if self.characters == word {
+                return true;
+            }
+
+            false
+        }
+
         /// Getter of the characters stored into the node.
         ///
         /// # Returns:
