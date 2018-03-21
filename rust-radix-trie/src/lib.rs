@@ -107,6 +107,8 @@ mod tests {
         let children = node.get_children();
         assert_eq!(children[0].get_characters(), FIRST_CHARACTERS);
         assert_eq!(children[1].get_characters(), SECOND_CHARACTERS);
+
+        assert_eq!(node.get_characters(), "");
     }
 
     #[test]
