@@ -55,6 +55,15 @@ mod rt {
         pub fn get_characters(&self) -> &str {
             &self.characters
         }
+
+        /// Getter of the children of the node.
+        ///
+        /// # Returns:
+        ///
+        /// list of children
+        pub fn get_children(&self) -> &Vec<Node> {
+            &self.children
+        }
     }
 }
 
