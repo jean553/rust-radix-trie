@@ -44,6 +44,12 @@ mod rt {
                 return;
             }
 
+            /* FIXME: this should only happens when the current character
+               is not the first character of any current node child */
+
+            self.children.push(Node::new(&self.characters));
+            self.children.push(Node::new(word));
+
             self.characters = "".to_string();
         }
 
@@ -85,15 +91,24 @@ mod tests {
     #[test]
     fn test_two_children_from_root() {
 
-        let mut node = Node::new("hello");
+        const FIRST_CHARACTERS: &str = "hello";
+        const SECOND_CHARACTERS: &str = "bonjour";
 
-        const INSERTED_CHARACTERS: &str = "bonjour";
+        let mut node = Node::new(FIRST_CHARACTERS);
+
+        const INSERTED_CHARACTERS: &str = SECOND_CHARACTERS;
         node.insert(INSERTED_CHARACTERS);
 
         const ROOT_NODE_EXPECTED_CHARACTERS: &str = "";
         assert_eq!(node.get_characters(), ROOT_NODE_EXPECTED_CHARACTERS);
 
-        /* FIXME: should check the content of the children */
+        /* FIXME: order should not matter when getting the children */
+
+        let children = node.get_children();
+        assert_eq!(children[0].get_characters(), FIRST_CHARACTERS);
+        assert_eq!(children[1].get_characters(), SECOND_CHARACTERS);
+
+        assert_eq!(node.get_characters(), "");
     }
 
     #[test]
