@@ -33,24 +33,38 @@ mod rt {
         /// `word` - the new word to store
         pub fn insert(&mut self, word: &str) {
 
-            /* FIXME: should browse the characters from the beginning
-               and continuously compare it with the word characters;
-               should not directly leave if there are different characters */
+            let mut contained_word = true;
+            let mut different_character_index = 0;
 
-            if word[..self.characters.len()] == self.characters &&
-                self.children.is_empty() {
+            for (index, character) in self.characters.chars().enumerate() {
+
+                if character != (word.as_bytes()[index] as char) {
+
+                    contained_word = false;
+                    different_character_index = index;
+                    break;
+                }
+            }
+
+            if contained_word && self.children.is_empty() {
                 self.characters = word.to_string();
-
                 return;
             }
 
-            /* FIXME: this should only happens when the current character
-               is not the first character of any current node child */
+            let characters = self.characters.clone();
+            let (first, second) = characters.split_at(
+                different_character_index as usize
+            );
 
-            self.children.push(Node::new(&self.characters));
-            self.children.push(Node::new(word));
+            self.characters = first.to_string();
+            self.children.push(Node::new(second));
 
-            self.characters = "".to_string();
+            let word = word.to_string();
+            let (_, second) = word.split_at(
+                different_character_index as usize
+            );
+
+            self.children.push(Node::new(second));
         }
 
         /// Indicates if a word exists into the radix trie
