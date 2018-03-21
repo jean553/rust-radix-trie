@@ -14,7 +14,7 @@ mod tests {
     }
 
     #[test]
-    fn test_two_children_from_root() {
+    fn test_two_children_from_empty_root() {
 
         const FIRST_CHARACTERS: &str = "hello";
         const SECOND_CHARACTERS: &str = "bonjour";
@@ -50,5 +50,18 @@ mod tests {
 
         assert_eq!(node.exists("hello"), true);
         assert_eq!(node.exists("bonjour"), false);
+    }
+
+    #[test]
+    fn test_two_children_from_non_empty_root() {
+
+        let mut node = Node::new("bonjour");
+        node.insert("bien");
+
+        let children = node.get_children();
+
+        assert_eq!(node.get_characters(), "b");
+        assert_eq!(children[0].get_characters(), "onjour");
+        assert_eq!(children[1].get_characters(), "ien");
     }
 }

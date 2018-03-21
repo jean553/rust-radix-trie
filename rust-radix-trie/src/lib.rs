@@ -33,24 +33,49 @@ mod rt {
         /// `word` - the new word to store
         pub fn insert(&mut self, word: &str) {
 
-            /* FIXME: should browse the characters from the beginning
-               and continuously compare it with the word characters;
-               should not directly leave if there are different characters */
+            let mut contained_word = true;
+            let mut different_character_index = 0;
 
-            if word[..self.characters.len()] == self.characters &&
-                self.children.is_empty() {
+            /* check if the word is present into
+               the first part of the node characters */
+
+            for (index, character) in self.characters.chars().enumerate() {
+
+                if character != (word.as_bytes()[index] as char) {
+                    contained_word = false;
+                    different_character_index = index;
+                    break;
+                }
+            }
+
+            /* if the first part of the node characters is exactly
+               the same as the word, then just replace it by the node
+               (if there is no child) */
+
+            if contained_word && self.children.is_empty() {
                 self.characters = word.to_string();
-
                 return;
             }
 
-            /* FIXME: this should only happens when the current character
-               is not the first character of any current node child */
+            /* in any other case, keep only the common part and set it
+               as the current node characters; the current node second
+               part is moved into a new child; the inserted word second
+               part is also moved into a new child */
 
-            self.children.push(Node::new(&self.characters));
-            self.children.push(Node::new(word));
+            let characters = self.characters.clone();
+            let (first, second) = characters.split_at(
+                different_character_index as usize
+            );
 
-            self.characters = "".to_string();
+            self.characters = first.to_string();
+            self.children.push(Node::new(second));
+
+            let word = word.to_string();
+            let (_, second) = word.split_at(
+                different_character_index as usize
+            );
+
+            self.children.push(Node::new(second));
         }
 
         /// Indicates if a word exists into the radix trie
