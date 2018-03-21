@@ -40,7 +40,11 @@ mod rt {
             if word[..self.characters.len()] == self.characters &&
                 self.children.is_empty() {
                 self.characters = word.to_string();
+
+                return;
             }
+
+            self.characters = "".to_string();
         }
 
         /// Getter of the characters stored into the node.
