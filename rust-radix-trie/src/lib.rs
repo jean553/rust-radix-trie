@@ -72,4 +72,18 @@ mod tests {
         node.insert(INSERTED_CHARACTERS);
         assert_eq!(node.get_characters(), INSERTED_CHARACTERS);
     }
+
+    #[test]
+    fn test_two_children_from_root() {
+
+        let mut node = Node::new("hello");
+
+        const INSERTED_CHARACTERS: &str = "bonjour";
+        node.insert(INSERTED_CHARACTERS);
+
+        const ROOT_NODE_EXPECTED_CHARACTERS: &str = "";
+        assert_eq!(node.get_characters(), ROOT_NODE_EXPECTED_CHARACTERS);
+
+        /* FIXME: should check the content of the children */
+    }
 }
