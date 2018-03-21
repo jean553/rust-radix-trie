@@ -53,7 +53,7 @@ mod tests {
     }
 
     #[test]
-    fn test_two_children_from_non_empty_root() {
+    fn test_split_characters_at_the_beginning() {
 
         let mut node = Node::new("bonjour");
         node.insert("bien");
@@ -63,5 +63,31 @@ mod tests {
         assert_eq!(node.get_characters(), "b");
         assert_eq!(children[0].get_characters(), "onjour");
         assert_eq!(children[1].get_characters(), "ien");
+    }
+
+    #[test]
+    fn test_split_characters_in_the_middle() {
+
+        let mut node = Node::new("bonjour");
+        node.insert("bonapp");
+
+        let children = node.get_children();
+
+        assert_eq!(node.get_characters(), "bon");
+        assert_eq!(children[0].get_characters(), "jour");
+        assert_eq!(children[1].get_characters(), "app");
+    }
+
+    #[test]
+    fn test_split_characters_at_the_end() {
+
+        let mut node = Node::new("bona");
+        node.insert("boni");
+
+        let children = node.get_children();
+
+        assert_eq!(node.get_characters(), "bon");
+        assert_eq!(children[0].get_characters(), "a");
+        assert_eq!(children[1].get_characters(), "i");
     }
 }
