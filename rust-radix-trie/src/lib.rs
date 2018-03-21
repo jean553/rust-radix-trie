@@ -44,6 +44,12 @@ mod rt {
                 return;
             }
 
+            /* FIXME: this should only happens when the current character
+               is not the first character of any current node child */
+
+            self.children.push(Node::new(&self.characters));
+            self.children.push(Node::new(word));
+
             self.characters = "".to_string();
         }
 
