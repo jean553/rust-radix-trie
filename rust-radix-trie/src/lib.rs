@@ -95,4 +95,11 @@ mod tests {
 
         /* FIXME: should check the content of the children */
     }
+
+    #[test]
+    fn test_get_children_from_root_are_empty_by_default() {
+
+        let node = Node::new("hello");
+        assert_eq!(node.get_children().is_empty(), true);
+    }
 }
