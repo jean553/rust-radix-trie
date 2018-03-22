@@ -70,10 +70,8 @@ mod tests {
         let node = Node::new("hello");
 
         assert_eq!(node.exists("hello"), true);
+        assert_eq!(node.exists("hella"), false);
         assert_eq!(node.exists("bonjour"), false);
-
-        assert_eq!(node.exists("he"), true);
-        assert_eq!(node.exists("hey"), false);
     }
 
     #[test]
@@ -82,6 +80,7 @@ mod tests {
         let node = Node::new("hello");
 
         assert_eq!(node.exists("he"), true);
+        assert_eq!(node.exists("hey"), false);
     }
 
     #[test]
@@ -89,6 +88,7 @@ mod tests {
 
         let node = Node::new("hello");
 
+        assert_eq!(node.exists("hello"), true);
         assert_eq!(node.exists("helloworld"), false);
     }
 
