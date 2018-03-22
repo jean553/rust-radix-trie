@@ -175,4 +175,23 @@ mod tests {
         assert_eq!(children[2].get_characters(), "soir");
         assert_eq!(children[3].get_characters(), "neapp");
     }
+
+    #[test]
+    fn test_characters_exist_into_root_node_when_children_exist() {
+
+        let mut node = Node::new("hello");
+        node.insert("hella");
+
+        assert_eq!(node.exists("hell"), true);
+    }
+
+    #[test]
+    fn test_characters_exist_into_children_node_when_children_exist() {
+
+        let mut node = Node::new("hello");
+        node.insert("hella");
+
+        assert_eq!(node.exists("hello"), true);
+        assert_eq!(node.exists("hella"), true);
+    }
 }
