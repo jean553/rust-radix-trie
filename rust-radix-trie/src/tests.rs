@@ -196,7 +196,7 @@ mod tests {
     }
 
     #[test]
-    fn test_characters_exist_into_root_node_when_children_exist() {
+    fn test_characters_exist_into_root_node_when_single_character_children_exist() {
 
         let mut node = Node::new("hello");
         node.insert("hella");
@@ -211,5 +211,28 @@ mod tests {
         assert_eq!(node.exists("he"), true);
 
         assert_eq!(node.exists("hey"), false);
+    }
+
+    #[test]
+    fn test_characters_exist_into_root_node_when_multiple_children_children_exist() {
+
+        let mut node = Node::new("helloworld");
+        node.insert("helloearth");
+
+        assert_eq!(node.exists("hello"), true);
+        assert_eq!(node.exists("hella"), false);
+
+        assert_eq!(node.exists("helloworld"), true);
+        assert_eq!(node.exists("helloearth"), true);
+        assert_eq!(node.exists("hellowo"), true);
+        assert_eq!(node.exists("helloea"), true);
+
+        assert_eq!(node.exists("hellowooow"), false);
+        assert_eq!(node.exists("helloearti"), false);
+        assert_eq!(node.exists("hellowa"), false);
+        assert_eq!(node.exists("helloei"), false);
+
+        assert_eq!(node.exists("helloworldandmore"), false);
+        assert_eq!(node.exists("helloearthandmore"), false);
     }
 }
