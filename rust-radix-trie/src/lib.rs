@@ -62,13 +62,20 @@ mod rt {
                part is moved into a new child; the inserted word second
                part is also moved into a new child */
 
-            let characters = self.characters.clone();
-            let (first, second) = characters.split_at(
-                different_character_index as usize
-            );
+            if self.children.is_empty() {
 
-            self.characters = first.to_string();
-            self.children.push(Node::new(second));
+                let characters = self.characters.clone();
+                let (first, second) = characters.split_at(
+                    different_character_index as usize
+                );
+
+                self.characters = first.to_string();
+                self.children.push(Node::new(second));
+            }
+
+            if contained_word {
+                different_character_index = self.characters.len();
+            }
 
             let word = word.to_string();
             let (_, second) = word.split_at(
