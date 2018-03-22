@@ -96,13 +96,34 @@ mod rt {
         /// True if the word exists, False if the word does not exist
         pub fn exists(&self, word: &str) -> bool {
 
-            /* FIXME: should search for the word into children */
+            for (index, character) in self.characters.chars().enumerate() {
 
-            if self.characters == word {
+                if index == word.len() {
+                    return true;
+                }
+
+                if character != (word.as_bytes()[index] as char) {
+                    return false;
+                }
+            }
+
+            if self.characters.len() == word.len() {
                 return true;
             }
 
-            false
+            let (_, second) = word.split_at(self.characters.len());
+            let mut exists_into_child = false;
+
+            for child in self.children.iter() {
+
+                exists_into_child = child.exists(second);
+
+                if exists_into_child {
+                    break;
+                }
+            }
+
+            exists_into_child
         }
 
         /// Getter of the characters stored into the node.
