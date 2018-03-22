@@ -158,4 +158,21 @@ mod tests {
         assert_eq!(children[1].get_characters(), "app");
         assert_eq!(children[2].get_characters(), "soir");
     }
+
+    #[test]
+    fn test_add_four_children_to_node_with_different_root() {
+
+        let mut node = Node::new("jour");
+        node.insert("app");
+        node.insert("soir");
+        node.insert("neapp");
+
+        let children = node.get_children();
+
+        assert_eq!(node.get_characters(), "");
+        assert_eq!(children[0].get_characters(), "jour");
+        assert_eq!(children[1].get_characters(), "app");
+        assert_eq!(children[2].get_characters(), "soir");
+        assert_eq!(children[3].get_characters(), "neapp");
+    }
 }
