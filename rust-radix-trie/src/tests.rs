@@ -71,6 +71,25 @@ mod tests {
 
         assert_eq!(node.exists("hello"), true);
         assert_eq!(node.exists("bonjour"), false);
+
+        assert_eq!(node.exists("he"), true);
+        assert_eq!(node.exists("hey"), false);
+    }
+
+    #[test]
+    fn test_characters_exist_into_root_node_with_small_word() {
+
+        let node = Node::new("hello");
+
+        assert_eq!(node.exists("he"), true);
+    }
+
+    #[test]
+    fn test_characters_exist_into_root_node_with_long_word() {
+
+        let node = Node::new("hello");
+
+        assert_eq!(node.exists("helloworld"), false);
     }
 
     #[test]
@@ -182,16 +201,15 @@ mod tests {
         let mut node = Node::new("hello");
         node.insert("hella");
 
-        assert_eq!(node.exists("hell"), true);
-    }
-
-    #[test]
-    fn test_characters_exist_into_children_node_when_children_exist() {
-
-        let mut node = Node::new("hello");
-        node.insert("hella");
-
         assert_eq!(node.exists("hello"), true);
         assert_eq!(node.exists("hella"), true);
+
+        assert_eq!(node.exists("helli"), false);
+        assert_eq!(node.exists("hellooop"), false);
+        assert_eq!(node.exists("helliot"), false);
+
+        assert_eq!(node.exists("he"), true);
+
+        assert_eq!(node.exists("hey"), false);
     }
 }
