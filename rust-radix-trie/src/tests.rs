@@ -111,4 +111,19 @@ mod tests {
         assert_eq!(children[0].get_characters(), "a");
         assert_eq!(children[1].get_characters(), "i");
     }
+
+    #[test]
+    fn test_add_three_children_to_node() {
+
+        let mut node = Node::new("bonjour");
+        node.insert("bonapp");
+        node.insert("bonsoir");
+
+        let children = node.get_children();
+
+        assert_eq!(node.get_characters(), "bon");
+        assert_eq!(children[0].get_characters(), "jour");
+        assert_eq!(children[1].get_characters(), "app");
+        assert_eq!(children[2].get_characters(), "soir");
+    }
 }
