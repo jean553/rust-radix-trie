@@ -82,6 +82,22 @@ mod rt {
                 different_character_index as usize
             );
 
+            for child in self.children.iter_mut() {
+
+                let child_characters = child.get_characters().to_string();
+
+                if child_characters.len() > second.len() {
+                    continue;
+                }
+
+                let (inserable, _) = second.split_at(child_characters.len());
+
+                if child.children.is_empty() && child_characters == inserable {
+                    child.set_characters(second);
+                    return;
+                }
+            }
+
             self.children.push(Node::new(second));
         }
 
