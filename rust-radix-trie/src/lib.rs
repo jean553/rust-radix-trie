@@ -159,6 +159,15 @@ mod rt {
         pub fn get_children(&self) -> &Vec<Node> {
             &self.children
         }
+
+        /// Setter of the node characters.
+        ///
+        /// # Args:
+        ///
+        /// `characters` - the characters to use
+        pub fn set_characters(&mut self, characters: &str) {
+            self.characters = characters.to_string();
+        }
     }
 }
 
