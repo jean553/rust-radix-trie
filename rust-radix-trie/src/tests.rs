@@ -196,6 +196,30 @@ mod tests {
     }
 
     #[test]
+    fn test_add_two_children_to_sub_node() {
+
+        let mut node = Node::new("salt");
+        node.insert("same");
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(node.get_characters(), "sa");
+            assert_eq!(children[0].get_characters(), "lt");
+            assert_eq!(children[1].get_characters(), "me");
+        }
+
+        node.insert("salted");
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(node.get_characters(), "sa");
+            assert_eq!(children[0].get_characters(), "lted");
+        }
+    }
+
+    #[test]
     fn test_characters_exist_into_root_node_when_single_character_children_exist() {
 
         let mut node = Node::new("hello");
