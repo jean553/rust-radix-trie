@@ -144,6 +144,20 @@ mod tests {
         assert_eq!(children[0].get_characters(), "jour");
         assert_eq!(children[1].get_characters(), "app");
         assert_eq!(children[2].get_characters(), "soir");
+
+        assert_eq!(node.exists("b"), true);
+        assert_eq!(node.exists("bon"), true);
+        assert_eq!(node.exists("bonap"), true);
+        assert_eq!(node.exists("bonjour"), true);
+        assert_eq!(node.exists("bonapp"), true);
+        assert_eq!(node.exists("bonsoir"), true);
+
+        assert_eq!(node.exists("a"), false);
+        assert_eq!(node.exists("boa"), false);
+        assert_eq!(node.exists("bonaa"), false);
+        assert_eq!(node.exists("bonjoua"), false);
+        assert_eq!(node.exists("bonapi"), false);
+        assert_eq!(node.exists("hello"), false);
     }
 
     #[test]
@@ -161,6 +175,23 @@ mod tests {
         assert_eq!(children[1].get_characters(), "app");
         assert_eq!(children[2].get_characters(), "soir");
         assert_eq!(children[3].get_characters(), "nenuit");
+
+        assert_eq!(node.exists("bo"), true);
+        assert_eq!(node.exists("bon"), true);
+        assert_eq!(node.exists("bons"), true);
+        assert_eq!(node.exists("bonnen"), true);
+        assert_eq!(node.exists("bonjour"), true);
+        assert_eq!(node.exists("bonapp"), true);
+        assert_eq!(node.exists("bonsoir"), true);
+        assert_eq!(node.exists("bonnenuit"), true);
+
+        assert_eq!(node.exists("ba"), false);
+        assert_eq!(node.exists("boa"), false);
+        assert_eq!(node.exists("boni"), false);
+        assert_eq!(node.exists("bonnea"), false);
+        assert_eq!(node.exists("bonsour"), false);
+        assert_eq!(node.exists("bonappet"), false);
+        assert_eq!(node.exists("hello"), false);
     }
 
     #[test]
@@ -176,6 +207,14 @@ mod tests {
         assert_eq!(children[0].get_characters(), "jour");
         assert_eq!(children[1].get_characters(), "app");
         assert_eq!(children[2].get_characters(), "soir");
+
+        assert_eq!(node.exists("jour"), true);
+        assert_eq!(node.exists("app"), true);
+        assert_eq!(node.exists("soir"), true);
+
+        assert_eq!(node.exists("journee"), false);
+        assert_eq!(node.exists(" app"), false);
+        assert_eq!(node.exists("siir"), false);
     }
 
     #[test]
@@ -193,10 +232,20 @@ mod tests {
         assert_eq!(children[1].get_characters(), "app");
         assert_eq!(children[2].get_characters(), "soir");
         assert_eq!(children[3].get_characters(), "neapp");
+
+        assert_eq!(node.exists("jour"), true);
+        assert_eq!(node.exists("app"), true);
+        assert_eq!(node.exists("soir"), true);
+        assert_eq!(node.exists("neapp"), true);
+
+        assert_eq!(node.exists("journee"), false);
+        assert_eq!(node.exists(" app"), false);
+        assert_eq!(node.exists("siir"), false);
+        assert_eq!(node.exists("lol"), false);
     }
 
     #[test]
-    fn test_add_two_children_to_sub_node() {
+    fn test_update_child_characters() {
 
         let mut node = Node::new("salt");
         node.insert("same");
@@ -217,6 +266,23 @@ mod tests {
             assert_eq!(node.get_characters(), "sa");
             assert_eq!(children[0].get_characters(), "lted");
         }
+
+        assert_eq!(node.exists("s"), true);
+        assert_eq!(node.exists("sal"), true);
+        assert_eq!(node.exists("salt"), true);
+        assert_eq!(node.exists("salte"), true);
+        assert_eq!(node.exists("salted"), true);
+        assert_eq!(node.exists("sam"), true);
+        assert_eq!(node.exists("same"), true);
+
+        assert_eq!(node.exists("u"), false);
+        assert_eq!(node.exists("sul"), false);
+        assert_eq!(node.exists("salu"), false);
+        assert_eq!(node.exists("saltu"), false);
+        assert_eq!(node.exists("salteu"), false);
+        assert_eq!(node.exists("sau"), false);
+        assert_eq!(node.exists("samu"), false);
+        assert_eq!(node.exists("samed"), false);
     }
 
     #[test]
@@ -235,6 +301,12 @@ mod tests {
         assert_eq!(node.exists("he"), true);
 
         assert_eq!(node.exists("hey"), false);
+
+        let children = node.get_children();
+
+        assert_eq!(node.get_characters(), "hell");
+        assert_eq!(children[0].get_characters(), "o");
+        assert_eq!(children[1].get_characters(), "a");
     }
 
     #[test]
@@ -258,5 +330,11 @@ mod tests {
 
         assert_eq!(node.exists("helloworldandmore"), false);
         assert_eq!(node.exists("helloearthandmore"), false);
+
+        let children = node.get_children();
+
+        assert_eq!(node.get_characters(), "hello");
+        assert_eq!(children[0].get_characters(), "world");
+        assert_eq!(children[1].get_characters(), "earth");
     }
 }
