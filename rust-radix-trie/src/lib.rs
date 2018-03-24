@@ -62,9 +62,11 @@ mod rt {
 
                 let child_characters = child.get_characters().to_string();
 
-                let (inserable, _) = word.split_at(
-                    child_characters.len()
-                );
+                let (inserable, _) = if word.len() >= child_characters.len() {
+                    word.split_at(child_characters.len())
+                } else {
+                    (word, "")
+                };
 
                 if child.get_children().is_empty() &&
                     child_characters == inserable {
