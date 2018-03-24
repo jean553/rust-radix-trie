@@ -245,7 +245,7 @@ mod tests {
     }
 
     #[test]
-    fn test_update_child_characters() {
+    fn test_update_first_child_characters() {
 
         let mut node = Node::new("salt");
         node.insert("same");
@@ -283,6 +283,31 @@ mod tests {
         assert_eq!(node.exists("sau"), false);
         assert_eq!(node.exists("samu"), false);
         assert_eq!(node.exists("samed"), false);
+    }
+
+    #[test]
+    fn test_update_second_child_characters() {
+
+        let mut node = Node::new("salt");
+        node.insert("same");
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(node.get_characters(), "sa");
+            assert_eq!(children[0].get_characters(), "lt");
+            assert_eq!(children[1].get_characters(), "me");
+        }
+
+        node.insert("sameless");
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(node.get_characters(), "sa");
+            assert_eq!(children[0].get_characters(), "lt");
+            assert_eq!(children[1].get_characters(), "meless");
+        }
     }
 
     #[test]
