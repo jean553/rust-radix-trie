@@ -196,7 +196,7 @@ mod tests {
     }
 
     #[test]
-    fn test_add_two_children_to_sub_node() {
+    fn test_update_child_characters() {
 
         let mut node = Node::new("salt");
         node.insert("same");
@@ -217,6 +217,23 @@ mod tests {
             assert_eq!(node.get_characters(), "sa");
             assert_eq!(children[0].get_characters(), "lted");
         }
+
+        assert_eq!(node.exists("s"), true);
+        assert_eq!(node.exists("sal"), true);
+        assert_eq!(node.exists("salt"), true);
+        assert_eq!(node.exists("salte"), true);
+        assert_eq!(node.exists("salted"), true);
+        assert_eq!(node.exists("sam"), true);
+        assert_eq!(node.exists("same"), true);
+
+        assert_eq!(node.exists("u"), false);
+        assert_eq!(node.exists("sul"), false);
+        assert_eq!(node.exists("salu"), false);
+        assert_eq!(node.exists("saltu"), false);
+        assert_eq!(node.exists("salteu"), false);
+        assert_eq!(node.exists("sau"), false);
+        assert_eq!(node.exists("samu"), false);
+        assert_eq!(node.exists("samed"), false);
     }
 
     #[test]
