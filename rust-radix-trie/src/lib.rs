@@ -33,8 +33,7 @@ mod rt {
         /// `word` - the new word to store
         pub fn insert(&mut self, word: &str) {
 
-            let mut contained_word = true;
-            let mut different_character_index = 0;
+            let mut different_character_index: Option<usize> = None;
 
             /* check if the word is present into
                the first part of the node characters */
@@ -42,8 +41,7 @@ mod rt {
             for (index, character) in self.characters.chars().enumerate() {
 
                 if character != (word.as_bytes()[index] as char) {
-                    contained_word = false;
-                    different_character_index = index;
+                    different_character_index = Some(index);
                     break;
                 }
             }
@@ -52,7 +50,7 @@ mod rt {
                the same as the word, then just replace it by the node
                (if there is no child) */
 
-            if contained_word && self.children.is_empty() {
+            if different_character_index.is_none() && self.children.is_empty() {
                 self.characters = word.to_string();
                 return;
             }
@@ -64,9 +62,11 @@ mod rt {
 
             let word = word.to_string();
 
-            if contained_word {
-                different_character_index = self.characters.len();
+            if different_character_index.is_none() {
+                different_character_index = Some(self.characters.len());
             }
+
+            let different_character_index = different_character_index.unwrap();
 
             let (_, word_second) = word.split_at(
                 different_character_index as usize
