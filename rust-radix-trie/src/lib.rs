@@ -37,17 +37,13 @@ mod rt {
 
             let word = word.to_string();
 
-            if index.is_none() && self.children.is_empty() {
-                self.characters = word;
-                return;
-            }
-
-            /* in any other case, keep only the common part and set it
-               as the current node characters; the current node second
-               part is moved into a new child; the inserted word second
-               part is also moved into a new child */
-
             if index.is_none() {
+
+                if self.children.is_empty() {
+                    self.characters = word;
+                    return;
+                }
+
                 index = Some(self.characters.len());
             }
 
