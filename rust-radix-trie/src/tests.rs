@@ -337,4 +337,24 @@ mod tests {
         assert_eq!(children[0].get_characters(), "world");
         assert_eq!(children[1].get_characters(), "earth");
     }
+
+    #[test]
+    fn test_child_of_child_creation() {
+
+        let mut node = Node::new("salt");
+        node.insert("same");
+        node.insert("salted");
+        node.insert("saltandpepper");
+
+        let children = node.get_children();
+
+        assert_eq!(node.get_characters(), "sa");
+        assert_eq!(children[0].get_characters(), "lt");
+        assert_eq!(children[1].get_characters(), "me");
+
+        let children = children[0].get_children();
+
+        assert_eq!(children[0].get_characters(), "ed");
+        assert_eq!(children[1].get_characters(), "andpepper");
+    }
 }
