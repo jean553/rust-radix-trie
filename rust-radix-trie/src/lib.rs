@@ -52,14 +52,7 @@ mod rt {
             let (_, word_second) = word.split_at(index);
 
             if self.children.is_empty() {
-
-                let characters = self.characters.clone();
-                let (first, second) = characters.split_at(index);
-
-                self.characters = first.to_string();
-                self.children.push(Node::new(second));
-                self.children.push(Node::new(word_second));
-
+                self.create_children(index, word_second);
                 return;
             }
 
@@ -144,6 +137,22 @@ mod rt {
             }
 
             None
+        }
+
+        /// Takes the node characters and extract the part from the given separator index in order to create a first child. The second child is simply created with the given word.
+        ///
+        /// # Args:
+        ///
+        /// `separator` - the index of the separator where the node word has to be divided
+        /// `word` - the word to insert into the second new created child
+        fn create_children(&mut self, separator: usize, word: &str) {
+
+            let characters = self.characters.clone();
+            let (first, second) = characters.split_at(separator);
+
+            self.characters = first.to_string();
+            self.children.push(Node::new(second));
+            self.children.push(Node::new(word));
         }
 
         /// Getter of the characters stored into the node.
