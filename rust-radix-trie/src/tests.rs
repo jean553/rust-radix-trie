@@ -553,5 +553,11 @@ mod tests {
         assert_eq!(first_child_subchildren[0].get_children().is_empty(), true);
         assert_eq!(first_child_subchildren[1].get_children().is_empty(), true);
         assert_eq!(first_child_subchildren[2].get_children().is_empty(), true);
+
+        assert_eq!(node.exists("salt"), true);
+        assert_eq!(node.exists("same"), true);
+        assert_eq!(node.exists("salted"), true);
+        assert_eq!(node.exists("saltandpepper"), true);
+        assert_eq!(node.exists("salto"), true);
     }
 }
