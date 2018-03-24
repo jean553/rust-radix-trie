@@ -56,7 +56,9 @@ mod rt {
                 return;
             }
 
-            for child in self.children.iter_mut() {
+            let mut selected_child: Option<usize> = None;
+
+            for (index, child) in self.children.iter().enumerate() {
 
                 let child_characters = child.get_characters().to_string();
 
@@ -64,10 +66,20 @@ mod rt {
                     child_characters.len()
                 );
 
-                if child.children.is_empty() && child_characters == inserable {
-                    child.set_characters(word);
-                    return;
+                if child.get_children().is_empty() &&
+                    child_characters == inserable {
+                    selected_child = Some(index);
+                    break;
                 }
+
+                if child_characters.as_bytes()[0] == word.as_bytes()[0] {
+                    selected_child = Some(index);
+                }
+            }
+
+            if selected_child.is_some() {
+                self.children[selected_child.unwrap()].insert(word);
+                return;
             }
 
             self.children.push(Node::new(word));
