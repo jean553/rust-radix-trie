@@ -458,7 +458,7 @@ mod tests {
     }
 
     #[test]
-    fn test_create_child_of_child() {
+    fn test_create_two_subchildren() {
 
         let mut node = Node::new("salt");
         node.insert("same");
@@ -493,19 +493,17 @@ mod tests {
 
         node.insert("saltandpepper");
 
-        {
-            let children = node.get_children();
-            let sub_children = children[0].get_children();
+        let children = node.get_children();
+        let sub_children = children[0].get_children();
 
-            assert_eq!(node.get_characters(), "sa");
-            assert_eq!(children[0].get_characters(), "lt");
-            assert_eq!(sub_children[0].get_characters(), "ed");
-            assert_eq!(sub_children[1].get_characters(), "andpepper");
+        assert_eq!(node.get_characters(), "sa");
+        assert_eq!(children[0].get_characters(), "lt");
+        assert_eq!(sub_children[0].get_characters(), "ed");
+        assert_eq!(sub_children[1].get_characters(), "andpepper");
 
-            assert_eq!(children[1].get_children().is_empty(), true);
-            assert_eq!(sub_children[0].get_children().is_empty(), true);
-            assert_eq!(sub_children[1].get_children().is_empty(), true);
-        }
+        assert_eq!(children[1].get_children().is_empty(), true);
+        assert_eq!(sub_children[0].get_children().is_empty(), true);
+        assert_eq!(sub_children[1].get_children().is_empty(), true);
 
         assert_eq!(node.exists("sal"), true);
         assert_eq!(node.exists("salt"), true);
