@@ -35,12 +35,10 @@ mod rt {
 
             let mut index = self.contains_word(word);
 
-            /* if the first part of the node characters is exactly
-               the same as the word, then just replace it by the node
-               (if there is no child) */
+            let word = word.to_string();
 
             if index.is_none() && self.children.is_empty() {
-                self.characters = word.to_string();
+                self.characters = word;
                 return;
             }
 
@@ -48,8 +46,6 @@ mod rt {
                as the current node characters; the current node second
                part is moved into a new child; the inserted word second
                part is also moved into a new child */
-
-            let word = word.to_string();
 
             if index.is_none() {
                 index = Some(self.characters.len());
