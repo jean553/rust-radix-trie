@@ -456,4 +456,73 @@ mod tests {
         assert_eq!(children[0].get_children().is_empty(), true);
         assert_eq!(children[1].get_children().is_empty(), true);
     }
+
+    #[test]
+    fn test_create_child_of_child() {
+
+        let mut node = Node::new("salt");
+        node.insert("same");
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(node.get_characters(), "sa");
+            assert_eq!(children[0].get_characters(), "lt");
+            assert_eq!(children[1].get_characters(), "me");
+
+            assert_eq!(children.len(), 2);
+
+            assert_eq!(children[0].get_children().is_empty(), true);
+            assert_eq!(children[1].get_children().is_empty(), true);
+        }
+
+        node.insert("salted");
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(node.get_characters(), "sa");
+            assert_eq!(children[0].get_characters(), "lted");
+            assert_eq!(children[1].get_characters(), "me");
+
+            assert_eq!(children.len(), 2);
+
+            assert_eq!(children[0].get_children().is_empty(), true);
+            assert_eq!(children[1].get_children().is_empty(), true);
+        }
+
+        node.insert("saltandpepper");
+
+        {
+            let children = node.get_children();
+            let sub_children = children[0].get_children();
+
+            assert_eq!(node.get_characters(), "sa");
+            assert_eq!(children[0].get_characters(), "lt");
+            assert_eq!(sub_children[0].get_characters(), "ed");
+            assert_eq!(sub_children[1].get_characters(), "andpepper");
+
+            assert_eq!(children[1].get_children().is_empty(), true);
+            assert_eq!(sub_children[0].get_children().is_empty(), true);
+            assert_eq!(sub_children[1].get_children().is_empty(), true);
+        }
+
+        assert_eq!(node.exists("sal"), true);
+        assert_eq!(node.exists("salt"), true);
+        assert_eq!(node.exists("saltand"), true);
+        assert_eq!(node.exists("saltandpepper"), true);
+        assert_eq!(node.exists("salte"), true);
+        assert_eq!(node.exists("salted"), true);
+        assert_eq!(node.exists("sam"), true);
+        assert_eq!(node.exists("same"), true);
+
+        assert_eq!(node.exists("sao"), false);
+        assert_eq!(node.exists("sali"), false);
+        assert_eq!(node.exists("saltani"), false);
+        assert_eq!(node.exists("saltandpeppor"), false);
+        assert_eq!(node.exists("salti"), false);
+        assert_eq!(node.exists("salter"), false);
+        assert_eq!(node.exists("sao"), false);
+        assert_eq!(node.exists("sami"), false);
+    }
 }
