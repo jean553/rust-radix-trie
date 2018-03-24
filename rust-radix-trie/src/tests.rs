@@ -525,4 +525,35 @@ mod tests {
         assert_eq!(node.exists("sao"), false);
         assert_eq!(node.exists("sami"), false);
     }
+
+    #[test]
+    fn test_create_three_subchildren() {
+
+        let mut node = Node::new("salt");
+        node.insert("same");
+        node.insert("salted");
+        node.insert("saltandpepper");
+        node.insert("salto");
+
+        assert_eq!(node.get_characters(), "sa");
+        assert_eq!(node.get_children().len(), 2);
+
+        let children = node.get_children();
+
+        assert_eq!(children[0].get_characters(), "lt");
+        assert_eq!(children[0].get_children().len(), 3);
+
+        assert_eq!(children[1].get_characters(), "me");
+        assert_eq!(children[1].get_children().is_empty(), true);
+
+        let first_child_subchildren = children[0].get_children();
+
+        assert_eq!(first_child_subchildren[0].get_characters(), "ed");
+        assert_eq!(first_child_subchildren[1].get_characters(), "andpepper");
+        assert_eq!(first_child_subchildren[2].get_characters(), "o");
+
+        assert_eq!(first_child_subchildren[0].get_children().is_empty(), true);
+        assert_eq!(first_child_subchildren[1].get_children().is_empty(), true);
+        assert_eq!(first_child_subchildren[2].get_children().is_empty(), true);
+    }
 }
