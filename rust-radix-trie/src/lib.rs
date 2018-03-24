@@ -33,24 +33,13 @@ mod rt {
         /// `word` - the new word to store
         pub fn insert(&mut self, word: &str) {
 
-            let mut separator_index: Option<usize> = None;
-
-            /* check if the word is present into
-               the first part of the node characters */
-
-            for (index, character) in self.characters.chars().enumerate() {
-
-                if character != (word.as_bytes()[index] as char) {
-                    separator_index = Some(index);
-                    break;
-                }
-            }
+            let mut index = self.contains_word(word);
 
             /* if the first part of the node characters is exactly
                the same as the word, then just replace it by the node
                (if there is no child) */
 
-            if separator_index.is_none() && self.children.is_empty() {
+            if index.is_none() && self.children.is_empty() {
                 self.characters = word.to_string();
                 return;
             }
@@ -62,18 +51,18 @@ mod rt {
 
             let word = word.to_string();
 
-            if separator_index.is_none() {
-                separator_index = Some(self.characters.len());
+            if index.is_none() {
+                index = Some(self.characters.len());
             }
 
-            let separator_index = separator_index.unwrap();
+            let index = index.unwrap();
 
-            let (_, word_second) = word.split_at(separator_index);
+            let (_, word_second) = word.split_at(index);
 
             if self.children.is_empty() {
 
                 let characters = self.characters.clone();
-                let (first, second) = characters.split_at(separator_index);
+                let (first, second) = characters.split_at(index);
 
                 self.characters = first.to_string();
                 self.children.push(Node::new(second));
@@ -142,6 +131,27 @@ mod rt {
             }
 
             exists_into_child
+        }
+
+        /// Indicates if the node contains the given word. That means if the word is the beginning of the node contained characters, or if the word is exactly the node characters.
+        ///
+        /// # Args:
+        ///
+        /// `word` - the word to find
+        ///
+        /// # Returns:
+        ///
+        /// The index of the first different character between the two words or none if no
+        /// difference is found after browsing the node characters and comparing with the word
+        fn contains_word(&self, word: &str) -> Option<usize> {
+
+            for (index, character) in self.characters.chars().enumerate() {
+                if character != (word.as_bytes()[index] as char) {
+                    return Some(index);
+                }
+            }
+
+            None
         }
 
         /// Getter of the characters stored into the node.
