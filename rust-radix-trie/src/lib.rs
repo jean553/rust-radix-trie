@@ -33,52 +33,26 @@ mod rt {
         /// `word` - the new word to store
         pub fn insert(&mut self, word: &str) {
 
-            let mut separator_index: Option<usize> = None;
-
-            /* check if the word is present into
-               the first part of the node characters */
-
-            for (index, character) in self.characters.chars().enumerate() {
-
-                if character != (word.as_bytes()[index] as char) {
-                    separator_index = Some(index);
-                    break;
-                }
-            }
-
-            /* if the first part of the node characters is exactly
-               the same as the word, then just replace it by the node
-               (if there is no child) */
-
-            if separator_index.is_none() && self.children.is_empty() {
-                self.characters = word.to_string();
-                return;
-            }
-
-            /* in any other case, keep only the common part and set it
-               as the current node characters; the current node second
-               part is moved into a new child; the inserted word second
-               part is also moved into a new child */
+            let mut index = self.contains_word(word);
 
             let word = word.to_string();
 
-            if separator_index.is_none() {
-                separator_index = Some(self.characters.len());
+            if index.is_none() {
+
+                if self.children.is_empty() {
+                    self.characters = word;
+                    return;
+                }
+
+                index = Some(self.characters.len());
             }
 
-            let separator_index = separator_index.unwrap();
+            let index = index.unwrap();
 
-            let (_, word_second) = word.split_at(separator_index);
+            let (_, word) = word.split_at(index);
 
             if self.children.is_empty() {
-
-                let characters = self.characters.clone();
-                let (first, second) = characters.split_at(separator_index);
-
-                self.characters = first.to_string();
-                self.children.push(Node::new(second));
-                self.children.push(Node::new(word_second));
-
+                self.create_children(index, word);
                 return;
             }
 
@@ -86,21 +60,17 @@ mod rt {
 
                 let child_characters = child.get_characters().to_string();
 
-                if child_characters.len() > word_second.len() {
-                    continue;
-                }
-
-                let (inserable, _) = word_second.split_at(
+                let (inserable, _) = word.split_at(
                     child_characters.len()
                 );
 
                 if child.children.is_empty() && child_characters == inserable {
-                    child.set_characters(word_second);
+                    child.set_characters(word);
                     return;
                 }
             }
 
-            self.children.push(Node::new(word_second));
+            self.children.push(Node::new(word));
         }
 
         /// Indicates if a word exists into the radix trie
@@ -142,6 +112,43 @@ mod rt {
             }
 
             exists_into_child
+        }
+
+        /// Indicates if the node contains the given word. That means if the word is the beginning of the node contained characters, or if the word is exactly the node characters.
+        ///
+        /// # Args:
+        ///
+        /// `word` - the word to find
+        ///
+        /// # Returns:
+        ///
+        /// The index of the first different character between the two words or none if no
+        /// difference is found after browsing the node characters and comparing with the word
+        fn contains_word(&self, word: &str) -> Option<usize> {
+
+            for (index, character) in self.characters.chars().enumerate() {
+                if character != (word.as_bytes()[index] as char) {
+                    return Some(index);
+                }
+            }
+
+            None
+        }
+
+        /// Takes the node characters and extract the part from the given separator index in order to create a first child. The second child is simply created with the given word.
+        ///
+        /// # Args:
+        ///
+        /// `separator` - the index of the separator where the node word has to be divided
+        /// `word` - the word to insert into the second new created child
+        fn create_children(&mut self, separator: usize, word: &str) {
+
+            let characters = self.characters.clone();
+            let (first, second) = characters.split_at(separator);
+
+            self.characters = first.to_string();
+            self.children.push(Node::new(second));
+            self.children.push(Node::new(word));
         }
 
         /// Getter of the characters stored into the node.
