@@ -20,9 +20,15 @@ mod rt {
         ///
         /// new radix trie node
         pub fn new(characters: &str) -> Node {
+
             Node {
-                characters: characters.to_string(),
-                children: Vec::new(),
+                characters: String::new(),
+                children: vec![
+                    Node {
+                        characters: characters.to_string(),
+                        children: Vec::new(),
+                    }
+                ],
             }
         }
 
