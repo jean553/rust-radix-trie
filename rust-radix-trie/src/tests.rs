@@ -8,9 +8,25 @@ mod tests {
 
         let mut node = Node::new("hello");
 
+        assert_eq!(node.exists("he"), true);
+        assert_eq!(node.exists("hello"), true);
+
+        assert_eq!(node.exists("hellowor"), false);
+
+        assert_eq!(node.get_children().is_empty(), true);
+
         const INSERTED_CHARACTERS: &str = "helloworld";
         node.insert(INSERTED_CHARACTERS);
         assert_eq!(node.get_characters(), INSERTED_CHARACTERS);
+
+        assert_eq!(node.exists("he"), true);
+        assert_eq!(node.exists("hello"), true);
+        assert_eq!(node.exists("hellowor"), true);
+        assert_eq!(node.exists("helloworld"), true);
+
+        assert_eq!(node.exists("helloworldandmore"), false);
+
+        assert_eq!(node.get_children().is_empty(), true);
     }
 
     #[test]
