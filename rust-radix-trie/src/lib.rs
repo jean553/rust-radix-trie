@@ -60,10 +60,6 @@ mod rt {
 
                 let child_characters = child.get_characters().to_string();
 
-                if child_characters.len() > word.len() {
-                    continue;
-                }
-
                 let (inserable, _) = word.split_at(
                     child_characters.len()
                 );
