@@ -62,6 +62,16 @@ mod rt {
                part is moved into a new child; the inserted word second
                part is also moved into a new child */
 
+            let word = word.to_string();
+
+            if contained_word {
+                different_character_index = self.characters.len();
+            }
+
+            let (_, word_second) = word.split_at(
+                different_character_index as usize
+            );
+
             if self.children.is_empty() {
 
                 let characters = self.characters.clone();
@@ -71,34 +81,28 @@ mod rt {
 
                 self.characters = first.to_string();
                 self.children.push(Node::new(second));
-            }
+                self.children.push(Node::new(word_second));
 
-            if contained_word {
-                different_character_index = self.characters.len();
+                return;
             }
-
-            let word = word.to_string();
-            let (_, second) = word.split_at(
-                different_character_index as usize
-            );
 
             for child in self.children.iter_mut() {
 
                 let child_characters = child.get_characters().to_string();
 
-                if child_characters.len() > second.len() {
+                if child_characters.len() > word_second.len() {
                     continue;
                 }
 
-                let (inserable, _) = second.split_at(child_characters.len());
+                let (inserable, _) = word_second.split_at(child_characters.len());
 
                 if child.children.is_empty() && child_characters == inserable {
-                    child.set_characters(second);
+                    child.set_characters(word_second);
                     return;
                 }
             }
 
-            self.children.push(Node::new(second));
+            self.children.push(Node::new(word_second));
         }
 
         /// Indicates if a word exists into the radix trie
