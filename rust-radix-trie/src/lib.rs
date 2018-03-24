@@ -49,10 +49,10 @@ mod rt {
 
             let index = index.unwrap();
 
-            let (_, word_second) = word.split_at(index);
+            let (_, word) = word.split_at(index);
 
             if self.children.is_empty() {
-                self.create_children(index, word_second);
+                self.create_children(index, word);
                 return;
             }
 
@@ -60,21 +60,21 @@ mod rt {
 
                 let child_characters = child.get_characters().to_string();
 
-                if child_characters.len() > word_second.len() {
+                if child_characters.len() > word.len() {
                     continue;
                 }
 
-                let (inserable, _) = word_second.split_at(
+                let (inserable, _) = word.split_at(
                     child_characters.len()
                 );
 
                 if child.children.is_empty() && child_characters == inserable {
-                    child.set_characters(word_second);
+                    child.set_characters(word);
                     return;
                 }
             }
 
-            self.children.push(Node::new(word_second));
+            self.children.push(Node::new(word));
         }
 
         /// Indicates if a word exists into the radix trie
