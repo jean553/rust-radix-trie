@@ -235,6 +235,12 @@ mod tests {
         assert_eq!(node.exists("he"), true);
 
         assert_eq!(node.exists("hey"), false);
+
+        let children = node.get_children();
+
+        assert_eq!(node.get_characters(), "hell");
+        assert_eq!(children[0].get_characters(), "o");
+        assert_eq!(children[1].get_characters(), "a");
     }
 
     #[test]
@@ -258,5 +264,11 @@ mod tests {
 
         assert_eq!(node.exists("helloworldandmore"), false);
         assert_eq!(node.exists("helloearthandmore"), false);
+
+        let children = node.get_children();
+
+        assert_eq!(node.get_characters(), "hello");
+        assert_eq!(children[0].get_characters(), "world");
+        assert_eq!(children[1].get_characters(), "earth");
     }
 }
