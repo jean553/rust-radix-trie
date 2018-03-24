@@ -560,4 +560,48 @@ mod tests {
         assert_eq!(node.exists("saltandpepper"), true);
         assert_eq!(node.exists("salto"), true);
     }
+
+    #[test]
+    fn test_create_two_subsubchildren() {
+
+        let mut node = Node::new("salt");
+        node.insert("same");
+        node.insert("salted");
+        node.insert("saltandpepper");
+        node.insert("saltandketchup");
+
+        assert_eq!(node.get_characters(), "sa");
+        assert_eq!(node.get_children().len(), 2);
+
+        let children = node.get_children();
+
+        assert_eq!(children[0].get_characters(), "lt");
+        assert_eq!(children[0].get_children().len(), 2);
+
+        assert_eq!(children[1].get_characters(), "me");
+        assert_eq!(children[1].get_children().is_empty(), true);
+
+        let sub_children = children[0].get_children();
+
+        assert_eq!(sub_children[0].get_characters(), "ed");
+        assert_eq!(sub_children[0].get_children().is_empty(), true);
+
+        assert_eq!(sub_children[1].get_characters(), "and");
+        assert_eq!(sub_children[1].get_children().len(), 2);
+
+        let subsub_children = sub_children[1].get_children();
+
+        assert_eq!(subsub_children[0].get_characters(), "pepper");
+        assert_eq!(subsub_children[0].get_children().is_empty(), true);
+
+        assert_eq!(subsub_children[1].get_characters(), "ketchup");
+        assert_eq!(subsub_children[1].get_children().is_empty(), true);
+
+        assert_eq!(node.exists("salt"), true);
+        assert_eq!(node.exists("same"), true);
+        assert_eq!(node.exists("salted"), true);
+        assert_eq!(node.exists("saltandpepper"), true);
+        assert_eq!(node.exists("saltandketc"), true);
+        assert_eq!(node.exists("saltandketchup"), true);
+    }
 }
