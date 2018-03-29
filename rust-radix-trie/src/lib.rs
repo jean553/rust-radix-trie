@@ -8,21 +8,39 @@ mod rt {
         children: Vec<Node>,
     }
 
+    /// Node creation factory,
+    ///
+    /// # Args:
+    ///
+    /// `characters` - the characters to store into the created node
+    ///
+    /// # Returns:
+    ///
+    /// new node
+    fn create_node(characters: &str) -> Node {
+
+        Node {
+            characters: characters.to_string(),
+            children: Vec::new(),
+        }
+    }
+
     impl Node {
 
-        /// Creates a new radix trie node, with an empty array of characters and an empty list of children nodes.
+        /// Creates a new radix trie, with an empty array of characters and an empty list of children nodes.
         ///
         /// # Arguments:
         ///
-        /// `characters` - the characters to store into the created node
+        /// `characters` - the characters to store into the first node of the trie (after the root node)
         ///
         /// # Returns:
         ///
-        /// new radix trie node
+        /// new radix trie
         pub fn new(characters: &str) -> Node {
+
             Node {
-                characters: characters.to_string(),
-                children: Vec::new(),
+                characters: String::new(),
+                children: vec![create_node(characters)],
             }
         }
 
@@ -32,6 +50,18 @@ mod rt {
         ///
         /// `word` - the new word to store
         pub fn insert(&mut self, word: &str) {
+
+            /* ensures the first root node with an empty string is ignored */
+
+            self.children[0].insert_node(word);
+        }
+
+        /// Recursively browse the radix trie in order to insert the word (may create new nodes).
+        ///
+        /// # Arguments:
+        ///
+        /// `word` - the new word to store
+        fn insert_node(&mut self, word: &str) {
 
             let mut index = self.contains_word(word);
 
@@ -80,11 +110,11 @@ mod rt {
             }
 
             if selected_child.is_some() {
-                self.children[selected_child.unwrap()].insert(word);
+                self.children[selected_child.unwrap()].insert_node(word);
                 return;
             }
 
-            self.children.push(Node::new(word));
+            self.children.push(create_node(word));
         }
 
         /// Indicates if a word exists into the radix trie
@@ -161,8 +191,8 @@ mod rt {
             let (first, second) = characters.split_at(separator);
 
             self.characters = first.to_string();
-            self.children.push(Node::new(second));
-            self.children.push(Node::new(word));
+            self.children.push(create_node(second));
+            self.children.push(create_node(word));
         }
 
         /// Getter of the characters stored into the node.
