@@ -646,4 +646,44 @@ mod tests {
         assert_eq!(node.exists("saltandketc"), true);
         assert_eq!(node.exists("saltandketchup"), true);
     }
+
+    #[test]
+    fn test_add_root_node_child_when_child_and_subchildren_exists() {
+
+        let mut node = Node::new("salt");
+        node.insert("same");
+
+        assert_eq!(node.get_characters(), "");
+        assert_eq!(node.get_children().len(), 1);
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(children[0].get_characters(), "sa");
+            assert_eq!(children[0].get_children().len(), 2);
+
+            let sub_children = children[0].get_children();
+
+            assert_eq!(sub_children[0].get_characters(), "lt");
+            assert_eq!(sub_children[0].get_children().is_empty(), true);
+
+            assert_eq!(sub_children[1].get_characters(), "me");
+            assert_eq!(sub_children[1].get_children().is_empty(), true);
+        }
+
+        node.insert("hello");
+
+        assert_eq!(node.get_characters(), "");
+        assert_eq!(node.get_children().len(), 2);
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(children[0].get_characters(), "sa");
+            assert_eq!(children[0].get_children().len(), 2);
+
+            assert_eq!(children[1].get_characters(), "hello");
+            assert_eq!(children[1].get_children().is_empty(), true);
+        }
+    }
 }
