@@ -668,5 +668,49 @@ mod tests {
             assert_eq!(children[1].get_characters(), "hello");
             assert_eq!(children[1].get_children().is_empty(), true);
         }
+
+        node.insert("bonjour");
+
+        assert_eq!(node.get_characters(), "");
+        assert_eq!(node.get_children().len(), 3);
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(children[0].get_characters(), "sa");
+            assert_eq!(children[0].get_children().len(), 2);
+
+            assert_eq!(children[1].get_characters(), "hello");
+            assert_eq!(children[1].get_children().is_empty(), true);
+
+            assert_eq!(children[2].get_characters(), "bonjour");
+            assert_eq!(children[2].get_children().is_empty(), true);
+        }
+
+        node.insert("hella");
+
+        assert_eq!(node.get_characters(), "");
+        assert_eq!(node.get_children().len(), 3);
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(children[0].get_characters(), "sa");
+            assert_eq!(children[0].get_children().len(), 2);
+
+            assert_eq!(children[1].get_characters(), "hell");
+            assert_eq!(children[1].get_children().len(), 2);
+
+            assert_eq!(children[2].get_characters(), "bonjour");
+            assert_eq!(children[2].get_children().is_empty(), true);
+
+            let sub_children = children[1].get_children();
+
+            assert_eq!(sub_children[0].get_characters(), "o");
+            assert_eq!(sub_children[0].get_children().is_empty(), true);
+
+            assert_eq!(sub_children[1].get_characters(), "a");
+            assert_eq!(sub_children[1].get_children().is_empty(), true);
+        }
     }
 }
