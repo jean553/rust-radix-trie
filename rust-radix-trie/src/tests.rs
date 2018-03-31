@@ -45,18 +45,14 @@ mod tests {
         const INSERTED_CHARACTERS: &str = SECOND_CHARACTERS;
         node.insert(INSERTED_CHARACTERS);
 
-        let children = node.get_children();
-
-        assert_eq!(children[0].get_children().len(), 2);
+        assert_eq!(node.get_children().len(), 2);
 
         const ROOT_NODE_EXPECTED_CHARACTERS: &str = "";
-        assert_eq!(children[0].get_characters(), ROOT_NODE_EXPECTED_CHARACTERS);
+        assert_eq!(node.get_characters(), ROOT_NODE_EXPECTED_CHARACTERS);
 
         /* FIXME: order should not matter when getting the children */
 
-        assert_eq!(children[0].get_characters(), "");
-
-        let children = children[0].get_children();
+        let children = node.get_children();
         assert_eq!(children[0].get_characters(), FIRST_CHARACTERS);
         assert_eq!(children[1].get_characters(), SECOND_CHARACTERS);
 
@@ -80,16 +76,12 @@ mod tests {
         const INSERTED_CHARACTERS: &str = SECOND_CHARACTERS;
         node.insert(INSERTED_CHARACTERS);
 
-        let children = node.get_children();
-
-        assert_eq!(children[0].get_children().len(), 2);
+        assert_eq!(node.get_children().len(), 2);
 
         const ROOT_NODE_EXPECTED_CHARACTERS: &str = "";
-        assert_eq!(children[0].get_characters(), ROOT_NODE_EXPECTED_CHARACTERS);
+        assert_eq!(node.get_characters(), ROOT_NODE_EXPECTED_CHARACTERS);
 
-        /* FIXME: order should not matter when getting the children */
-
-        let children = children[0].get_children();
+        let children = node.get_children();
         assert_eq!(node.get_characters(), "");
         assert_eq!(children[0].get_characters(), FIRST_CHARACTERS);
         assert_eq!(children[1].get_characters(), SECOND_CHARACTERS);
@@ -287,13 +279,14 @@ mod tests {
         node.insert("app");
         node.insert("soir");
 
-        let children = node.get_children();
-        let sub_children = children[0].get_children();
+        assert_eq!(node.get_characters(), "");
+        assert_eq!(node.get_children().len(), 3);
 
-        assert_eq!(children[0].get_characters(), "");
-        assert_eq!(sub_children[0].get_characters(), "jour");
-        assert_eq!(sub_children[1].get_characters(), "app");
-        assert_eq!(sub_children[2].get_characters(), "soir");
+        let children = node.get_children();
+
+        assert_eq!(children[0].get_characters(), "jour");
+        assert_eq!(children[1].get_characters(), "app");
+        assert_eq!(children[2].get_characters(), "soir");
 
         assert_eq!(node.exists("jour"), true);
         assert_eq!(node.exists("app"), true);
@@ -302,11 +295,6 @@ mod tests {
         assert_eq!(node.exists("journee"), false);
         assert_eq!(node.exists(" app"), false);
         assert_eq!(node.exists("siir"), false);
-
-        assert_eq!(sub_children.len(), 3);
-        assert_eq!(sub_children[0].get_children().is_empty(), true);
-        assert_eq!(sub_children[1].get_children().is_empty(), true);
-        assert_eq!(sub_children[2].get_children().is_empty(), true);
     }
 
     #[test]
@@ -317,14 +305,15 @@ mod tests {
         node.insert("soir");
         node.insert("neapp");
 
-        let children = node.get_children();
-        let sub_children = children[0].get_children();
+        assert_eq!(node.get_characters(), "");
+        assert_eq!(node.get_children().len(), 4);
 
-        assert_eq!(children[0].get_characters(), "");
-        assert_eq!(sub_children[0].get_characters(), "jour");
-        assert_eq!(sub_children[1].get_characters(), "app");
-        assert_eq!(sub_children[2].get_characters(), "soir");
-        assert_eq!(sub_children[3].get_characters(), "neapp");
+        let children = node.get_children();
+
+        assert_eq!(children[0].get_characters(), "jour");
+        assert_eq!(children[1].get_characters(), "app");
+        assert_eq!(children[2].get_characters(), "soir");
+        assert_eq!(children[3].get_characters(), "neapp");
 
         assert_eq!(node.exists("jour"), true);
         assert_eq!(node.exists("app"), true);
@@ -335,12 +324,6 @@ mod tests {
         assert_eq!(node.exists(" app"), false);
         assert_eq!(node.exists("siir"), false);
         assert_eq!(node.exists("lol"), false);
-
-        assert_eq!(sub_children.len(), 4);
-        assert_eq!(sub_children[0].get_children().is_empty(), true);
-        assert_eq!(sub_children[1].get_children().is_empty(), true);
-        assert_eq!(sub_children[2].get_children().is_empty(), true);
-        assert_eq!(sub_children[3].get_children().is_empty(), true);
     }
 
     #[test]
@@ -645,5 +628,45 @@ mod tests {
         assert_eq!(node.exists("saltandpepper"), true);
         assert_eq!(node.exists("saltandketc"), true);
         assert_eq!(node.exists("saltandketchup"), true);
+    }
+
+    #[test]
+    fn test_add_root_node_child_when_child_and_subchildren_exists() {
+
+        let mut node = Node::new("salt");
+        node.insert("same");
+
+        assert_eq!(node.get_characters(), "");
+        assert_eq!(node.get_children().len(), 1);
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(children[0].get_characters(), "sa");
+            assert_eq!(children[0].get_children().len(), 2);
+
+            let sub_children = children[0].get_children();
+
+            assert_eq!(sub_children[0].get_characters(), "lt");
+            assert_eq!(sub_children[0].get_children().is_empty(), true);
+
+            assert_eq!(sub_children[1].get_characters(), "me");
+            assert_eq!(sub_children[1].get_children().is_empty(), true);
+        }
+
+        node.insert("hello");
+
+        assert_eq!(node.get_characters(), "");
+        assert_eq!(node.get_children().len(), 2);
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(children[0].get_characters(), "sa");
+            assert_eq!(children[0].get_children().len(), 2);
+
+            assert_eq!(children[1].get_characters(), "hello");
+            assert_eq!(children[1].get_children().is_empty(), true);
+        }
     }
 }

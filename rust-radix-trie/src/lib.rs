@@ -51,6 +51,18 @@ mod rt {
         /// `word` - the new word to store
         pub fn insert(&mut self, word: &str) {
 
+            /* TODO: check if the word is contained into children nodes
+               should be performed on every children node
+               and not only the first one */
+
+            /* check if the root child characters are different from the word
+               directly until the first character, so that means a brand new
+               child node has to be created */
+            if self.children[0].contains_word(word).unwrap_or(1) == 0 {
+                self.children.push(create_node(word));
+                return;
+            }
+
             /* ensures the first root node with an empty string is ignored */
 
             self.children[0].insert_node(word);
