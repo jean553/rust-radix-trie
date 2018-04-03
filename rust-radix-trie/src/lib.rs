@@ -3,6 +3,7 @@
 mod rt {
 
     /// A radix trie node with a string (array of characters) and children to other nodes.
+    #[derive(Clone)]
     pub struct Node {
         characters: String,
         children: Vec<Node>,
@@ -130,6 +131,31 @@ mod rt {
 
             if selected_child.is_some() {
                 self.children[selected_child.unwrap()].insert_node(word);
+                return;
+            }
+
+            if index != self.characters.len() {
+
+                /* in that case, modification of the current node characters
+                   is required; it is also required to move the current node
+                   children as sub-children of a new child */
+
+                let characters = self.characters.clone();
+
+                let (new_characters, new_child) = characters.split_at(index);
+                self.characters = new_characters.to_string();
+
+                let mut last_child = create_node(new_child);
+
+                for child in self.children.iter() {
+                    last_child.children.push((*child).clone());
+                }
+
+                self.children.clear();
+
+                self.children.push(last_child);
+                self.children.push(create_node(word));
+
                 return;
             }
 
