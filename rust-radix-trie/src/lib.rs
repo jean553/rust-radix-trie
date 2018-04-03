@@ -147,9 +147,10 @@ mod rt {
 
                 let mut last_child = create_node(new_child);
 
-                for child in self.children.iter() {
-                    last_child.children.push((*child).clone());
-                }
+                last_child.children = self.children
+                    .iter()
+                    .map(|child| { (*child).clone() })
+                    .collect();
 
                 self.children.clear();
 
