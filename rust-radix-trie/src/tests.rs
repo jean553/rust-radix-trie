@@ -774,4 +774,54 @@ mod tests {
         assert_eq!(sub_children[2].get_characters(), "d");
         assert!(sub_children[2].get_children().is_empty());
     }
+
+    #[test]
+    fn test_replace_root_child_characters() {
+
+        let mut node = Node::new("salt");
+        node.insert("same");
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(children[0].get_characters(), "sa");
+            assert_eq!(children[0].get_children().len(), 2);
+
+            let sub_children = children[0].get_children();
+
+            assert_eq!(sub_children[0].get_characters(), "lt");
+            assert_eq!(sub_children[0].get_children().is_empty(), true);
+
+            assert_eq!(sub_children[1].get_characters(), "me");
+            assert_eq!(sub_children[1].get_children().is_empty(), true);
+        }
+
+        node.insert("sol");
+
+        assert_eq!(node.get_characters(), "");
+        assert_eq!(node.get_children().len(), 1);
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(children[0].get_characters(), "s");
+            assert_eq!(children[0].get_children().len(), 2);
+
+            let sub_children = children[0].get_children();
+
+            assert_eq!(sub_children[0].get_characters(), "a");
+            assert_eq!(sub_children[0].get_children().len(), 2);
+
+            assert_eq!(sub_children[1].get_characters(), "ol");
+            assert!(sub_children[1].get_children().is_empty());
+
+            let sub_sub_children = sub_children[0].get_children();
+
+            assert_eq!(sub_sub_children[0].get_characters(), "lt");
+            assert!(sub_sub_children[0].get_children().is_empty());
+
+            assert_eq!(sub_sub_children[1].get_characters(), "me");
+            assert!(sub_sub_children[1].get_children().is_empty());
+        }
+    }
 }
