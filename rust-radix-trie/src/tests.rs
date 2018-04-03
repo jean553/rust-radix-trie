@@ -26,7 +26,7 @@ mod tests {
 
         assert_eq!(node.exists("helloworldandmore"), false);
 
-        assert_eq!(children[0].get_children().is_empty(), true);
+        assert!(children[0].get_children().is_empty());
     }
 
     #[test]
@@ -39,7 +39,7 @@ mod tests {
 
         {
             let children = node.get_children();
-            assert_eq!(children[0].get_children().is_empty(), true);
+            assert!(children[0].get_children().is_empty());
         }
 
         const INSERTED_CHARACTERS: &str = SECOND_CHARACTERS;
@@ -56,8 +56,8 @@ mod tests {
         assert_eq!(children[0].get_characters(), FIRST_CHARACTERS);
         assert_eq!(children[1].get_characters(), SECOND_CHARACTERS);
 
-        assert_eq!(children[0].get_children().is_empty(), true);
-        assert_eq!(children[1].get_children().is_empty(), true);
+        assert!(children[0].get_children().is_empty());
+        assert!(children[1].get_children().is_empty());
     }
 
     #[test]
@@ -70,7 +70,7 @@ mod tests {
 
         {
             let children = node.get_children();
-            assert_eq!(children[0].get_children().is_empty(), true);
+            assert!(children[0].get_children().is_empty());
         }
 
         const INSERTED_CHARACTERS: &str = SECOND_CHARACTERS;
@@ -86,8 +86,8 @@ mod tests {
         assert_eq!(children[0].get_characters(), FIRST_CHARACTERS);
         assert_eq!(children[1].get_characters(), SECOND_CHARACTERS);
 
-        assert_eq!(children[0].get_children().is_empty(), true);
-        assert_eq!(children[1].get_children().is_empty(), true);
+        assert!(children[0].get_children().is_empty());
+        assert!(children[1].get_children().is_empty());
     }
 
     #[test]
@@ -109,7 +109,7 @@ mod tests {
         assert_eq!(node.exists("bonjour"), false);
 
         let children = node.get_children();
-        assert_eq!(children[0].get_children().is_empty(), true);
+        assert!(children[0].get_children().is_empty());
     }
 
     #[test]
@@ -123,7 +123,7 @@ mod tests {
         assert_eq!(node.exists("hey"), false);
 
         let children = node.get_children();
-        assert_eq!(children[0].get_children().is_empty(), true);
+        assert!(children[0].get_children().is_empty());
     }
 
     #[test]
@@ -137,7 +137,7 @@ mod tests {
         assert_eq!(node.exists("helloworld"), false);
 
         let children = node.get_children();
-        assert_eq!(children[0].get_children().is_empty(), true);
+        assert!(children[0].get_children().is_empty());
     }
 
     #[test]
@@ -156,8 +156,8 @@ mod tests {
         assert_eq!(sub_children[0].get_characters(), "onjour");
         assert_eq!(sub_children[1].get_characters(), "ien");
 
-        assert_eq!(sub_children[0].get_children().is_empty(), true);
-        assert_eq!(sub_children[1].get_children().is_empty(), true);
+        assert!(sub_children[0].get_children().is_empty());
+        assert!(sub_children[1].get_children().is_empty());
     }
 
     #[test]
@@ -174,8 +174,8 @@ mod tests {
         assert_eq!(sub_children[1].get_characters(), "app");
 
         assert_eq!(sub_children.len(), 2);
-        assert_eq!(sub_children[0].get_children().is_empty(), true);
-        assert_eq!(sub_children[1].get_children().is_empty(), true);
+        assert!(sub_children[0].get_children().is_empty());
+        assert!(sub_children[1].get_children().is_empty());
     }
 
     #[test]
@@ -192,8 +192,8 @@ mod tests {
         assert_eq!(sub_children[1].get_characters(), "i");
 
         assert_eq!(sub_children.len(), 2);
-        assert_eq!(sub_children[0].get_children().is_empty(), true);
-        assert_eq!(sub_children[1].get_children().is_empty(), true);
+        assert!(sub_children[0].get_children().is_empty());
+        assert!(sub_children[1].get_children().is_empty());
     }
 
     #[test]
@@ -226,9 +226,9 @@ mod tests {
         assert_eq!(node.exists("hello"), false);
 
         assert_eq!(sub_children.len(), 3);
-        assert_eq!(sub_children[0].get_children().is_empty(), true);
-        assert_eq!(sub_children[1].get_children().is_empty(), true);
-        assert_eq!(sub_children[2].get_children().is_empty(), true);
+        assert!(sub_children[0].get_children().is_empty());
+        assert!(sub_children[1].get_children().is_empty());
+        assert!(sub_children[2].get_children().is_empty());
     }
 
     #[test]
@@ -266,10 +266,10 @@ mod tests {
         assert_eq!(node.exists("hello"), false);
 
         assert_eq!(sub_children.len(), 4);
-        assert_eq!(sub_children[0].get_children().is_empty(), true);
-        assert_eq!(sub_children[1].get_children().is_empty(), true);
-        assert_eq!(sub_children[2].get_children().is_empty(), true);
-        assert_eq!(sub_children[3].get_children().is_empty(), true);
+        assert!(sub_children[0].get_children().is_empty());
+        assert!(sub_children[1].get_children().is_empty());
+        assert!(sub_children[2].get_children().is_empty());
+        assert!(sub_children[3].get_children().is_empty());
     }
 
     #[test]
@@ -341,8 +341,8 @@ mod tests {
             assert_eq!(sub_children[1].get_characters(), "me");
 
             assert_eq!(children[0].get_children().len(), 2);
-            assert_eq!(sub_children[0].get_children().is_empty(), true);
-            assert_eq!(sub_children[1].get_children().is_empty(), true);
+            assert!(sub_children[0].get_children().is_empty());
+            assert!(sub_children[1].get_children().is_empty());
         }
 
         node.insert("salted");
@@ -355,8 +355,8 @@ mod tests {
             assert_eq!(sub_children[0].get_characters(), "lted");
 
             assert_eq!(children[0].get_children().len(), 2);
-            assert_eq!(sub_children[0].get_children().is_empty(), true);
-            assert_eq!(sub_children[1].get_children().is_empty(), true);
+            assert!(sub_children[0].get_children().is_empty());
+            assert!(sub_children[1].get_children().is_empty());
         }
 
         assert_eq!(node.exists("s"), true);
@@ -392,8 +392,8 @@ mod tests {
             assert_eq!(sub_children[1].get_characters(), "me");
 
             assert_eq!(children[0].get_children().len(), 2);
-            assert_eq!(sub_children[0].get_children().is_empty(), true);
-            assert_eq!(sub_children[1].get_children().is_empty(), true);
+            assert!(sub_children[0].get_children().is_empty());
+            assert!(sub_children[1].get_children().is_empty());
         }
 
         node.insert("sameless");
@@ -407,8 +407,8 @@ mod tests {
             assert_eq!(sub_children[1].get_characters(), "meless");
 
             assert_eq!(children[0].get_children().len(), 2);
-            assert_eq!(sub_children[0].get_children().is_empty(), true);
-            assert_eq!(sub_children[1].get_children().is_empty(), true);
+            assert!(sub_children[0].get_children().is_empty());
+            assert!(sub_children[1].get_children().is_empty());
         }
     }
 
@@ -437,8 +437,8 @@ mod tests {
         assert_eq!(sub_children[1].get_characters(), "a");
 
         assert_eq!(children[0].get_children().len(), 2);
-        assert_eq!(sub_children[0].get_children().is_empty(), true);
-        assert_eq!(sub_children[1].get_children().is_empty(), true);
+        assert!(sub_children[0].get_children().is_empty());
+        assert!(sub_children[1].get_children().is_empty());
     }
 
     #[test]
@@ -471,8 +471,8 @@ mod tests {
         assert_eq!(sub_children[1].get_characters(), "earth");
 
         assert_eq!(children[0].get_children().len(), 2);
-        assert_eq!(sub_children[0].get_children().is_empty(), true);
-        assert_eq!(sub_children[1].get_children().is_empty(), true);
+        assert!(sub_children[0].get_children().is_empty());
+        assert!(sub_children[1].get_children().is_empty());
     }
 
     #[test]
@@ -490,8 +490,8 @@ mod tests {
             assert_eq!(sub_children[1].get_characters(), "me");
 
             assert_eq!(sub_children.len(), 2);
-            assert_eq!(sub_children[0].get_children().is_empty(), true);
-            assert_eq!(sub_children[1].get_children().is_empty(), true);
+            assert!(sub_children[0].get_children().is_empty());
+            assert!(sub_children[1].get_children().is_empty());
         }
 
         node.insert("salted");
@@ -505,8 +505,8 @@ mod tests {
             assert_eq!(sub_children[1].get_characters(), "me");
 
             assert_eq!(sub_children.len(), 2);
-            assert_eq!(sub_children[0].get_children().is_empty(), true);
-            assert_eq!(sub_children[1].get_children().is_empty(), true);
+            assert!(sub_children[0].get_children().is_empty());
+            assert!(sub_children[1].get_children().is_empty());
         }
 
         node.insert("saltandpepper");
@@ -520,9 +520,9 @@ mod tests {
         assert_eq!(sub_sub_children[0].get_characters(), "ed");
         assert_eq!(sub_sub_children[1].get_characters(), "andpepper");
 
-        assert_eq!(sub_children[1].get_children().is_empty(), true);
-        assert_eq!(sub_sub_children[0].get_children().is_empty(), true);
-        assert_eq!(sub_sub_children[1].get_children().is_empty(), true);
+        assert!(sub_children[1].get_children().is_empty());
+        assert!(sub_sub_children[0].get_children().is_empty());
+        assert!(sub_sub_children[1].get_children().is_empty());
 
         assert_eq!(node.exists("sal"), true);
         assert_eq!(node.exists("salt"), true);
@@ -563,7 +563,7 @@ mod tests {
         assert_eq!(sub_children[0].get_children().len(), 3);
 
         assert_eq!(sub_children[1].get_characters(), "me");
-        assert_eq!(sub_children[1].get_children().is_empty(), true);
+        assert!(sub_children[1].get_children().is_empty());
 
         let first_child_subchildren = sub_children[0].get_children();
 
@@ -571,9 +571,9 @@ mod tests {
         assert_eq!(first_child_subchildren[1].get_characters(), "andpepper");
         assert_eq!(first_child_subchildren[2].get_characters(), "o");
 
-        assert_eq!(first_child_subchildren[0].get_children().is_empty(), true);
-        assert_eq!(first_child_subchildren[1].get_children().is_empty(), true);
-        assert_eq!(first_child_subchildren[2].get_children().is_empty(), true);
+        assert!(first_child_subchildren[0].get_children().is_empty());
+        assert!(first_child_subchildren[1].get_children().is_empty());
+        assert!(first_child_subchildren[2].get_children().is_empty());
 
         assert_eq!(node.exists("salt"), true);
         assert_eq!(node.exists("same"), true);
@@ -604,12 +604,12 @@ mod tests {
         assert_eq!(sub_children[0].get_children().len(), 2);
 
         assert_eq!(sub_children[1].get_characters(), "me");
-        assert_eq!(sub_children[1].get_children().is_empty(), true);
+        assert!(sub_children[1].get_children().is_empty());
 
         let sub_children = sub_children[0].get_children();
 
         assert_eq!(sub_children[0].get_characters(), "ed");
-        assert_eq!(sub_children[0].get_children().is_empty(), true);
+        assert!(sub_children[0].get_children().is_empty());
 
         assert_eq!(sub_children[1].get_characters(), "and");
         assert_eq!(sub_children[1].get_children().len(), 2);
@@ -617,10 +617,10 @@ mod tests {
         let subsub_children = sub_children[1].get_children();
 
         assert_eq!(subsub_children[0].get_characters(), "pepper");
-        assert_eq!(subsub_children[0].get_children().is_empty(), true);
+        assert!(subsub_children[0].get_children().is_empty());
 
         assert_eq!(subsub_children[1].get_characters(), "ketchup");
-        assert_eq!(subsub_children[1].get_children().is_empty(), true);
+        assert!(subsub_children[1].get_children().is_empty());
 
         assert_eq!(node.exists("salt"), true);
         assert_eq!(node.exists("same"), true);
@@ -648,10 +648,10 @@ mod tests {
             let sub_children = children[0].get_children();
 
             assert_eq!(sub_children[0].get_characters(), "lt");
-            assert_eq!(sub_children[0].get_children().is_empty(), true);
+            assert!(sub_children[0].get_children().is_empty());
 
             assert_eq!(sub_children[1].get_characters(), "me");
-            assert_eq!(sub_children[1].get_children().is_empty(), true);
+            assert!(sub_children[1].get_children().is_empty());
         }
 
         node.insert("hello");
@@ -666,7 +666,7 @@ mod tests {
             assert_eq!(children[0].get_children().len(), 2);
 
             assert_eq!(children[1].get_characters(), "hello");
-            assert_eq!(children[1].get_children().is_empty(), true);
+            assert!(children[1].get_children().is_empty());
         }
 
         node.insert("bonjour");
@@ -681,10 +681,10 @@ mod tests {
             assert_eq!(children[0].get_children().len(), 2);
 
             assert_eq!(children[1].get_characters(), "hello");
-            assert_eq!(children[1].get_children().is_empty(), true);
+            assert!(children[1].get_children().is_empty());
 
             assert_eq!(children[2].get_characters(), "bonjour");
-            assert_eq!(children[2].get_children().is_empty(), true);
+            assert!(children[2].get_children().is_empty());
         }
 
         node.insert("hella");
@@ -702,15 +702,15 @@ mod tests {
             assert_eq!(children[1].get_children().len(), 2);
 
             assert_eq!(children[2].get_characters(), "bonjour");
-            assert_eq!(children[2].get_children().is_empty(), true);
+            assert!(children[2].get_children().is_empty());
 
             let sub_children = children[1].get_children();
 
             assert_eq!(sub_children[0].get_characters(), "o");
-            assert_eq!(sub_children[0].get_children().is_empty(), true);
+            assert!(sub_children[0].get_children().is_empty());
 
             assert_eq!(sub_children[1].get_characters(), "a");
-            assert_eq!(sub_children[1].get_children().is_empty(), true);
+            assert!(sub_children[1].get_children().is_empty());
         }
     }
 
@@ -823,5 +823,13 @@ mod tests {
             assert_eq!(sub_sub_children[1].get_characters(), "me");
             assert!(sub_sub_children[1].get_children().is_empty());
         }
+
+        assert!(node.exists("salt"));
+        assert!(node.exists("same"));
+        assert!(node.exists("sol"));
+
+        assert!(node.exists("sal"));
+        assert!(node.exists("sam"));
+        assert!(node.exists("so"));
     }
 }
