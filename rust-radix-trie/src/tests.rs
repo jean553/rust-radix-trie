@@ -817,10 +817,10 @@ mod tests {
 
             let sub_sub_children = sub_children[0].get_children();
 
-            assert_eq!(sub_sub_children[0].get_characters(), "me");
+            assert_eq!(sub_sub_children[0].get_characters(), "lt");
             assert!(sub_sub_children[0].get_children().is_empty());
 
-            assert_eq!(sub_sub_children[1].get_characters(), "lt");
+            assert_eq!(sub_sub_children[1].get_characters(), "me");
             assert!(sub_sub_children[1].get_children().is_empty());
         }
     }
