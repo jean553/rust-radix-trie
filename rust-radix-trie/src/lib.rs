@@ -142,10 +142,14 @@ mod rt {
 
                 let characters = self.characters.clone();
 
-                let (new_characters, new_child) = characters.split_at(index);
-                self.characters = new_characters.to_string();
+                let (
+                    saved_characters,
+                    moved_characters
+                ) = characters.split_at(index);
 
-                let mut last_child = create_node(new_child);
+                self.characters = saved_characters.to_string();
+
+                let mut last_child = create_node(moved_characters);
 
                 last_child.children = self.children
                     .iter()
