@@ -2,19 +2,31 @@
 
 # rust-radix-trie
 
-## Create the container
+## Usage example
+
+```rust
+let mut trie = RadixTrie::new("salt");
+trie.insert("same");
+
+trie.exists("sam"); // true
+trie.exists("salted"); // false
+```
+
+## Development
+
+### Create the container
 
 ```sh
 vagrant up
 ```
 
-## Connect to the container
+### Connect to the container
 
 ```sh
 vagrant ssh
 ```
 
-## Unit tests
+### Unit tests
 
 ```sh
 cargo test
