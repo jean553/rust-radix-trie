@@ -1,12 +1,12 @@
 #[cfg(test)]
 mod tests {
 
-    use rt::Node;
+    use rt::RadixTrie;
 
     #[test]
     fn test_node_creation_and_insertion() {
 
-        let mut node = Node::new("hello");
+        let mut node = RadixTrie::new("hello");
 
         assert_eq!(node.exists("he"), true);
         assert_eq!(node.exists("hello"), true);
@@ -35,7 +35,7 @@ mod tests {
         const FIRST_CHARACTERS: &str = "hello";
         const SECOND_CHARACTERS: &str = "bonjour";
 
-        let mut node = Node::new(FIRST_CHARACTERS);
+        let mut node = RadixTrie::new(FIRST_CHARACTERS);
 
         {
             let children = node.get_children();
@@ -66,7 +66,7 @@ mod tests {
         const FIRST_CHARACTERS: &str = "hello";
         const SECOND_CHARACTERS: &str = "bon";
 
-        let mut node = Node::new(FIRST_CHARACTERS);
+        let mut node = RadixTrie::new(FIRST_CHARACTERS);
 
         {
             let children = node.get_children();
@@ -93,14 +93,14 @@ mod tests {
     #[test]
     fn test_get_children_from_root_has_one_child_by_default() {
 
-        let node = Node::new("hello");
+        let node = RadixTrie::new("hello");
         assert_eq!(node.get_children().len(), 1);
     }
 
     #[test]
     fn test_characters_exist_into_root_node() {
 
-        let node = Node::new("hello");
+        let node = RadixTrie::new("hello");
 
         assert_eq!(node.get_children().len(), 1);
 
@@ -115,7 +115,7 @@ mod tests {
     #[test]
     fn test_characters_exist_into_root_node_with_small_word() {
 
-        let node = Node::new("hello");
+        let node = RadixTrie::new("hello");
 
         assert_eq!(node.get_children().len(), 1);
 
@@ -129,7 +129,7 @@ mod tests {
     #[test]
     fn test_characters_exist_into_root_node_with_long_word() {
 
-        let node = Node::new("hello");
+        let node = RadixTrie::new("hello");
 
         assert_eq!(node.get_children().len(), 1);
 
@@ -143,7 +143,7 @@ mod tests {
     #[test]
     fn test_split_characters_at_the_beginning() {
 
-        let mut node = Node::new("bonjour");
+        let mut node = RadixTrie::new("bonjour");
         node.insert("bien");
 
         let children = node.get_children();
@@ -163,7 +163,7 @@ mod tests {
     #[test]
     fn test_split_characters_in_the_middle() {
 
-        let mut node = Node::new("bonjour");
+        let mut node = RadixTrie::new("bonjour");
         node.insert("bonapp");
 
         let children = node.get_children();
@@ -181,7 +181,7 @@ mod tests {
     #[test]
     fn test_split_characters_at_the_end() {
 
-        let mut node = Node::new("bona");
+        let mut node = RadixTrie::new("bona");
         node.insert("boni");
 
         let children = node.get_children();
@@ -199,7 +199,7 @@ mod tests {
     #[test]
     fn test_add_three_children_to_node() {
 
-        let mut node = Node::new("bonjour");
+        let mut node = RadixTrie::new("bonjour");
         node.insert("bonapp");
         node.insert("bonsoir");
 
@@ -234,7 +234,7 @@ mod tests {
     #[test]
     fn test_add_four_children_to_node() {
 
-        let mut node = Node::new("bonjour");
+        let mut node = RadixTrie::new("bonjour");
         node.insert("bonapp");
         node.insert("bonsoir");
         node.insert("bonnenuit");
@@ -275,7 +275,7 @@ mod tests {
     #[test]
     fn test_add_three_children_to_node_with_different_root() {
 
-        let mut node = Node::new("jour");
+        let mut node = RadixTrie::new("jour");
         node.insert("app");
         node.insert("soir");
 
@@ -300,7 +300,7 @@ mod tests {
     #[test]
     fn test_add_four_children_to_node_with_different_root() {
 
-        let mut node = Node::new("jour");
+        let mut node = RadixTrie::new("jour");
         node.insert("app");
         node.insert("soir");
         node.insert("neapp");
@@ -329,7 +329,7 @@ mod tests {
     #[test]
     fn test_update_first_child_characters() {
 
-        let mut node = Node::new("salt");
+        let mut node = RadixTrie::new("salt");
         node.insert("same");
 
         {
@@ -380,7 +380,7 @@ mod tests {
     #[test]
     fn test_update_second_child_characters() {
 
-        let mut node = Node::new("salt");
+        let mut node = RadixTrie::new("salt");
         node.insert("same");
 
         {
@@ -415,7 +415,7 @@ mod tests {
     #[test]
     fn test_characters_exist_into_root_node_when_single_character_children_exist() {
 
-        let mut node = Node::new("hello");
+        let mut node = RadixTrie::new("hello");
         node.insert("hella");
 
         assert_eq!(node.exists("hello"), true);
@@ -444,7 +444,7 @@ mod tests {
     #[test]
     fn test_characters_exist_into_root_node_when_multiple_children_children_exist() {
 
-        let mut node = Node::new("helloworld");
+        let mut node = RadixTrie::new("helloworld");
         node.insert("helloearth");
 
         assert_eq!(node.exists("hello"), true);
@@ -478,7 +478,7 @@ mod tests {
     #[test]
     fn test_create_two_subchildren() {
 
-        let mut node = Node::new("salt");
+        let mut node = RadixTrie::new("salt");
         node.insert("same");
 
         {
@@ -546,7 +546,7 @@ mod tests {
     #[test]
     fn test_create_three_subchildren() {
 
-        let mut node = Node::new("salt");
+        let mut node = RadixTrie::new("salt");
         node.insert("same");
         node.insert("salted");
         node.insert("saltandpepper");
@@ -585,7 +585,7 @@ mod tests {
     #[test]
     fn test_create_two_subsubchildren() {
 
-        let mut node = Node::new("salt");
+        let mut node = RadixTrie::new("salt");
         node.insert("same");
         node.insert("salted");
         node.insert("saltandpepper");
@@ -633,7 +633,7 @@ mod tests {
     #[test]
     fn test_add_root_node_child_when_child_and_subchildren_exists() {
 
-        let mut node = Node::new("salt");
+        let mut node = RadixTrie::new("salt");
         node.insert("same");
 
         assert_eq!(node.get_characters(), "");
@@ -717,7 +717,7 @@ mod tests {
     #[test]
     fn test_add_root_child_node_child_when_child_and_subchildren_exists() {
 
-        let mut node = Node::new("sa");
+        let mut node = RadixTrie::new("sa");
         node.insert("hello");
         node.insert("same");
         node.insert("salt");
@@ -778,7 +778,7 @@ mod tests {
     #[test]
     fn test_replace_root_child_characters() {
 
-        let mut node = Node::new("salt");
+        let mut node = RadixTrie::new("salt");
         node.insert("same");
 
         {
@@ -836,7 +836,7 @@ mod tests {
     #[test]
     fn test_replace_root_child_characters_and_move_sub_children() {
 
-        let mut node = Node::new("salt");
+        let mut node = RadixTrie::new("salt");
         node.insert("same");
         node.insert("salted");
         node.insert("saltandpepper");
