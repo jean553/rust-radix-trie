@@ -832,4 +832,69 @@ mod tests {
         assert!(node.exists("sam"));
         assert!(node.exists("so"));
     }
+
+    #[test]
+    fn test_replace_root_child_characters_and_move_sub_children() {
+
+        let mut node = Node::new("salt");
+        node.insert("same");
+        node.insert("salted");
+        node.insert("saltandpepper");
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(children[0].get_characters(), "sa");
+            assert_eq!(children[0].get_children().len(), 2);
+
+            let sub_children = children[0].get_children();
+
+            assert_eq!(sub_children[0].get_characters(), "lt");
+            assert_eq!(sub_children[0].get_children().len(), 2);
+
+            assert_eq!(sub_children[1].get_characters(), "me");
+            assert!(sub_children[1].get_children().is_empty());
+
+            let sub_sub_children = sub_children[0].get_children();
+
+            assert_eq!(sub_sub_children[0].get_characters(), "ed");
+            assert!(sub_sub_children[0].get_children().is_empty());
+
+            assert_eq!(sub_sub_children[1].get_characters(), "andpepper");
+            assert!(sub_sub_children[1].get_children().is_empty());
+        }
+
+        node.insert("sol");
+
+        {
+            let children = node.get_children();
+
+            assert_eq!(children[0].get_characters(), "s");
+            assert_eq!(children[0].get_children().len(), 2);
+
+            let sub_children = children[0].get_children();
+
+            assert_eq!(sub_children[0].get_characters(), "a");
+            assert_eq!(sub_children[0].get_children().len(), 2);
+
+            assert_eq!(sub_children[1].get_characters(), "ol");
+            assert!(sub_children[1].get_children().is_empty());
+
+            let sub_sub_children = sub_children[0].get_children();
+
+            assert_eq!(sub_sub_children[0].get_characters(), "lt");
+            assert_eq!(sub_sub_children[0].get_children().len(), 2);
+
+            assert_eq!(sub_sub_children[1].get_characters(), "me");
+            assert!(sub_sub_children[1].get_children().is_empty());
+
+            let sub_sub_sub_children = sub_sub_children[0].get_children();
+
+            assert_eq!(sub_sub_sub_children[0].get_characters(), "ed");
+            assert!(sub_sub_sub_children[0].get_children().is_empty());
+
+            assert_eq!(sub_sub_sub_children[1].get_characters(), "andpepper");
+            assert!(sub_sub_sub_children[1].get_children().is_empty());
+        }
+    }
 }
