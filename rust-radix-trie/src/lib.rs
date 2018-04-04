@@ -4,12 +4,12 @@ mod rt {
 
     /// A radix trie node with a string (array of characters) and children to other nodes.
     #[derive(Clone)]
-    pub struct Node {
+    pub struct RadixTrie {
         characters: String,
-        children: Vec<Node>,
+        children: Vec<RadixTrie>,
     }
 
-    /// Node creation factory,
+    /// RadixTrie creation factory,
     ///
     /// # Args:
     ///
@@ -18,15 +18,15 @@ mod rt {
     /// # Returns:
     ///
     /// new node
-    fn create_node(characters: &str) -> Node {
+    fn create_node(characters: &str) -> RadixTrie {
 
-        Node {
+        RadixTrie {
             characters: characters.to_string(),
             children: Vec::new(),
         }
     }
 
-    impl Node {
+    impl RadixTrie {
 
         /// Creates a new radix trie, with an empty array of characters and an empty list of children nodes.
         ///
@@ -37,9 +37,9 @@ mod rt {
         /// # Returns:
         ///
         /// new radix trie
-        pub fn new(characters: &str) -> Node {
+        pub fn new(characters: &str) -> RadixTrie {
 
-            Node {
+            RadixTrie {
                 characters: String::new(),
                 children: vec![create_node(characters)],
             }
@@ -259,7 +259,7 @@ mod rt {
         /// # Returns:
         ///
         /// list of children
-        pub fn get_children(&self) -> &Vec<Node> {
+        pub fn get_children(&self) -> &Vec<RadixTrie> {
             &self.children
         }
 
