@@ -12,6 +12,14 @@ trie.exists("sam"); // true
 trie.exists("salted"); // false
 ```
 
+## Implemented features
+
+ * Insertion with node key modification
+ * Insertion with new nodes creation
+ * Insertion with children nodes move if necessary
+ * Recursive browsing until the appropriate insertion node is found
+ * Check if a key exists
+
 ## Development
 
 ### Create the container
